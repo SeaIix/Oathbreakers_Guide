@@ -706,12 +706,15 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, confirmPassword } = req.body;
   if (!username || !password) {
     return res.render('register', { error: 'Username and password are required' });
   }
   if (username.length < 3 || password.length < 4) {
     return res.render('register', { error: 'Username must be 3+ chars, password 4+ chars' });
+  }
+  if (password !== confirmPassword) {
+    return res.render('register', { error: 'Passwords do not match' });
   }
   try {
     const existing = await pool.query('SELECT id FROM users WHERE username = $1', [username]);

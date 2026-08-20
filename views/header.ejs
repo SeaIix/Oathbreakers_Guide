@@ -16,7 +16,9 @@
             <% if (typeof customTabs !== 'undefined') { customTabs.forEach(function(tab) { %>
             <a href="/table/<%= tab.id %>"><%= tab.name %></a>
             <% }); } %>
+            <% if (typeof username !== 'undefined' && username) { %>
             <a href="/quests">Quests</a>
+            <% } %>
         </div>
         <div class="nav-user">
             <% if (typeof username !== 'undefined' && username) { %>
