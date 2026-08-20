@@ -1,0 +1,332 @@
+<%- include('header') %>
+<h1><%= displayName %></h1>
+
+<div class="controls">
+    <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()">
+    <% if (filterOptions) { %>
+    <select id="filterElement" onchange="filterTable()">
+        <option value="">All Elements</option>
+        <% filterOptions.elements.forEach(function(el) { %>
+        <option value="<%= el %>"><%= el %></option>
+        <% }) %>
+    </select>
+    <select id="filterSchool" onchange="filterTable()">
+        <option value="">All Schools</option>
+        <% filterOptions.schools.forEach(function(s) { %>
+        <option value="<%= s %>"><%= s %></option>
+        <% }) %>
+    </select>
+    <% } %>
+    <% if (!isShared) { %>
+    <button class="btn-primary" onclick="toggleAddForm()">+ Add Row</button>
+    <% } %>
+</div>
+
+<% if (!isShared) { %>
+<div id="addForm" class="add-form" style="display:none;">
+    <h3>Add New Row</h3>
+    <form onsubmit="addRow(event)">
+        <div class="form-grid">
+            <% columns.filter(function(c) { return !c.virtual; }).forEach(function(col) { %>
+            <div class="form-group">
+                <label for="field_<%= col.key %>"><%= col.label %></label>
+                <input type="text" name="<%= col.key %>" id="field_<%= col.key %>">
+            </div>
+            <% }) %>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Save</button>
+            <button type="button" class="btn-secondary" onclick="toggleAddForm()">Cancel</button>
+        </div>
+    </form>
+</div>
+<% } %>
+
+<div class="table-wrapper">
+    <table id="dataTable" class="<%= compact ? 'compact-table' : '' %>">
+        <thead>
+            <tr>
+                <% if (!isShared) { %><th class="grip-col"></th><% } %>
+                <% columns.forEach(function(col) { %>
+                <th><%= col.label %></th>
+                <% }) %>
+                <% if (!isShared) { %><th class="actions-col">Actions</th><% } %>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach(function(row) { %>
+            <tr data-id="<%= row.id %>" <% if (!isShared) { %>draggable="true"<% } %>>
+                <% if (!isShared) { %><td class="grip-cell" title="Drag to reorder">&#9776;</td><% } %>
+                <% columns.forEach(function(col) { %>
+                <td data-col="<%= col.key %>" <% if (col.virtual) { %>data-virtual="true"<% } %> title="<%= row[col.key] || '' %>"><%= row[col.key] || '' %></td>
+                <% }) %>
+                <% if (!isShared) { %>
+                <td class="actions-col">
+                    <button class="edit-btn" onclick="startEdit(this)">Edit</button>
+                    <button class="delete-btn" onclick="deleteRow(<%= row.id %>)">Delete</button>
+                </td>
+                <% } %>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<p class="row-count"><%= rows.length %> rows</p>
+
+<script>
+var currentEditId = null;
+var draggedRow = null;
+
+function filterTable() {
+    var input = document.getElementById('searchInput').value.toLowerCase();
+    var filterEl = document.getElementById('filterElement');
+    var filterSc = document.getElementById('filterSchool');
+    var elVal = filterEl ? filterEl.value.toLowerCase() : '';
+    var scVal = filterSc ? filterSc.value.toLowerCase() : '';
+    var rows = document.querySelectorAll('#dataTable tbody tr');
+    var count = 0;
+    rows.forEach(function(row) {
+        if (row.classList.contains('editing')) return;
+        var text = row.textContent.toLowerCase();
+        var match = text.includes(input);
+        if (match && elVal) {
+            var elTd = row.querySelector('td[data-col="element"]');
+            match = elTd && elTd.textContent.toLowerCase() === elVal;
+        }
+        if (match && scVal) {
+            var scTd = row.querySelector('td[data-col="school"]');
+            match = scTd && scTd.textContent.toLowerCase() === scVal;
+        }
+        row.style.display = match ? '' : 'none';
+        if (match) count++;
+    });
+    document.querySelector('.row-count').textContent = count + ' rows';
+}
+
+<% if (!isShared) { %>
+function toggleAddForm() {
+    var form = document.getElementById('addForm');
+    if (form.style.display === 'none') {
+        cancelEdit();
+        form.style.display = 'block';
+        document.getElementById('searchInput').value = '';
+    } else {
+        form.style.display = 'none';
+    }
+}
+
+function addRow(e) {
+    e.preventDefault();
+    var form = e.target;
+    var data = {};
+    <% columns.filter(function(c) { return !c.virtual; }).forEach(function(col) { %>
+    data['<%= col.key %>'] = form.elements['<%= col.key %>'].value;
+    <% }) %>
+
+    fetch('/api/<%= apiBase %>/<%= tableName %>', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(result) {
+        if (result.id) {
+            if (result.warning) alert(result.warning);
+            location.reload();
+        } else {
+            alert('Error: ' + (result.error || 'Unknown error'));
+        }
+    })
+    .catch(function(err) { alert('Network error: ' + err); });
+}
+
+function startEdit(btn) {
+    cancelEdit();
+    var tr = btn.closest('tr');
+    var id = tr.dataset.id;
+    currentEditId = id;
+    tr.classList.add('editing');
+
+    var tds = tr.querySelectorAll('td[data-col]');
+    var originalValues = {};
+
+    tds.forEach(function(td) {
+        var col = td.dataset.col;
+        var val = td.textContent;
+        originalValues[col] = val;
+
+        if (td.dataset.virtual === 'true') return;
+
+        td.style.width = td.offsetWidth + 'px';
+        td.textContent = '';
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.value = val;
+        input.className = 'inline-input';
+        td.appendChild(input);
+    });
+
+    var actionsTd = tr.querySelector('.actions-col');
+    actionsTd.style.width = actionsTd.offsetWidth + 'px';
+    actionsTd.innerHTML =
+        '<button class="btn-primary save-btn" onclick="saveEdit(' + id + ')">Save</button>' +
+        '<button class="btn-secondary cancel-btn" onclick="cancelEdit()">Cancel</button>';
+    actionsTd._originalValues = originalValues;
+}
+
+function saveEdit(id) {
+    var tr = document.querySelector('tr[data-id="' + id + '"]');
+    var data = {};
+    var inputs = tr.querySelectorAll('td[data-col] input');
+    inputs.forEach(function(input) {
+        var col = input.closest('td').dataset.col;
+        data[col] = input.value;
+    });
+
+    fetch('/api/<%= apiBase %>/' + id, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(result) {
+        if (result.message) {
+            if (result.warning) alert(result.warning);
+            location.reload();
+        } else {
+            alert('Error: ' + (result.error || 'Unknown error'));
+        }
+    })
+    .catch(function(err) { alert('Network error: ' + err); });
+}
+
+function cancelEdit() {
+    var editing = document.querySelector('tr.editing');
+    if (!editing) return;
+
+    var actionsTd = editing.querySelector('.actions-col');
+    var originalValues = actionsTd._originalValues || {};
+    var id = editing.dataset.id;
+
+    editing.querySelectorAll('td[data-col]').forEach(function(td) {
+        var col = td.dataset.col;
+        td.textContent = originalValues[col] || '';
+        td.style.width = '';
+    });
+
+    actionsTd.innerHTML =
+        '<button class="edit-btn" onclick="startEdit(this)">Edit</button>' +
+        '<button class="delete-btn" onclick="deleteRow(' + id + ')">Delete</button>';
+    actionsTd.style.width = '';
+
+    editing.classList.remove('editing');
+    currentEditId = null;
+}
+
+function deleteRow(id) {
+    if (!confirm('Delete this row?')) return;
+
+    fetch('/api/<%= apiBase %>/' + id, { method: 'DELETE' })
+    .then(function(r) { return r.json(); })
+    .then(function(result) {
+        if (result.message) {
+            location.reload();
+        } else {
+            alert('Error: ' + (result.error || 'Unknown error'));
+        }
+    })
+    .catch(function(err) { alert('Network error: ' + err); });
+}
+
+var tbody = document.querySelector('#dataTable tbody');
+
+tbody.addEventListener('dragstart', function(e) {
+    var tr = e.target.closest('tr');
+    if (!tr || tr.classList.contains('editing')) { e.preventDefault(); return; }
+    draggedRow = tr;
+    tr.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', tr.dataset.id);
+});
+
+tbody.addEventListener('dragend', function(e) {
+    var tr = e.target.closest('tr');
+    if (tr) tr.classList.remove('dragging');
+    tbody.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(function(el) {
+        el.classList.remove('drag-over-top', 'drag-over-bottom');
+    });
+    draggedRow = null;
+});
+
+tbody.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    var tr = e.target.closest('tr');
+    if (!tr || tr === draggedRow) return;
+
+    tbody.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(function(el) {
+        el.classList.remove('drag-over-top', 'drag-over-bottom');
+    });
+
+    var rect = tr.getBoundingClientRect();
+    var midY = rect.top + rect.height / 2;
+    if (e.clientY < midY) {
+        tr.classList.add('drag-over-top');
+    } else {
+        tr.classList.add('drag-over-bottom');
+    }
+});
+
+tbody.addEventListener('drop', function(e) {
+    e.preventDefault();
+    var targetTr = e.target.closest('tr');
+    if (!targetTr || targetTr === draggedRow) return;
+
+    var rect = targetTr.getBoundingClientRect();
+    var midY = rect.top + rect.height / 2;
+
+    if (e.clientY < midY) {
+        tbody.insertBefore(draggedRow, targetTr);
+    } else {
+        tbody.insertBefore(draggedRow, targetTr.nextSibling);
+    }
+
+    tbody.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(function(el) {
+        el.classList.remove('drag-over-top', 'drag-over-bottom');
+    });
+
+    saveOrder();
+});
+
+function saveOrder() {
+    var rows = tbody.querySelectorAll('tr');
+    var order = [];
+    rows.forEach(function(tr, i) {
+        order.push({ id: parseInt(tr.dataset.id), position: i });
+    });
+
+    fetch('/api/<%= apiBase %>/reorder', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ order: order })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(result) {
+        if (!result.message) {
+            alert('Failed to save row order');
+        }
+    })
+    .catch(function(err) { alert('Network error: ' + err); });
+}
+<% } %>
+
+document.querySelectorAll('#dataTable tbody td[data-col]').forEach(function(td) {
+    if (td.scrollWidth > td.clientWidth + 5 && td.textContent.trim() !== '') {
+        td.classList.add('clickable-cell');
+        td.addEventListener('click', function() {
+            this.classList.toggle('expanded-cell');
+        });
+    }
+});
+</script>
+<%- include('footer') %>

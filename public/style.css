@@ -1,0 +1,907 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+nav {
+    background: #16213e;
+    padding: 0.8rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border-bottom: 2px solid #0f3460;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    color: #e94560;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: #a0a0b0;
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 0.9rem;
+}
+
+.nav-links a:hover {
+    background: #0f3460;
+    color: #fff;
+}
+
+main {
+    max-width: 1600px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+h1 {
+    color: #e94560;
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+}
+
+.table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.table-card {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    text-decoration: none;
+    color: #e0e0e0;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.table-card:hover {
+    transform: translateY(-3px);
+    border-color: #e94560;
+}
+
+.table-card h2 {
+    color: #e94560;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.table-card p {
+    color: #808090;
+    font-size: 0.9rem;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.controls input {
+    flex: 1;
+    max-width: 400px;
+    padding: 0.6rem 1rem;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+    background: #16213e;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.controls input:focus {
+    border-color: #e94560;
+}
+
+.controls select {
+    padding: 0.6rem 1rem;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+    background: #16213e;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.controls select:focus {
+    border-color: #e94560;
+}
+
+.btn-primary {
+    padding: 0.6rem 1.2rem;
+    background: #e94560;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #c73550;
+}
+
+.btn-secondary {
+    padding: 0.6rem 1.2rem;
+    background: #0f3460;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #1a4a80;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #0f3460;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #16213e;
+    min-width: 800px;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+th {
+    background: #0f3460;
+    color: #e94560;
+    padding: 0.7rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    box-sizing: border-box;
+}
+
+td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid #1a1a3e;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.compact-table th {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.compact-table td {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.8rem;
+    max-width: 180px;
+}
+
+tr:hover td {
+    background: #1a1a3e;
+}
+
+.actions-col {
+    width: 160px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.grip-col {
+    width: 30px;
+}
+
+.grip-cell {
+    cursor: grab;
+    text-align: center;
+    color: #505070;
+    user-select: none;
+    font-size: 1rem;
+}
+
+.grip-cell:hover {
+    color: #e94560;
+}
+
+tr.dragging {
+    opacity: 0.4;
+}
+
+tr.drag-over-top {
+    box-shadow: inset 0 2px 0 0 #e94560;
+}
+
+tr.drag-over-bottom {
+    box-shadow: inset 0 -2px 0 0 #e94560;
+}
+
+.edit-btn {
+    padding: 0.25rem 0.7rem;
+    background: #0f3460;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.edit-btn:hover {
+    background: #1a5a90;
+}
+
+.delete-btn {
+    padding: 0.25rem 0.7rem;
+    background: #c73550;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.delete-btn:hover {
+    background: #a02040;
+}
+
+.save-btn,
+.cancel-btn {
+    padding: 0.25rem 0.7rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.inline-input {
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #e94560;
+    border-radius: 3px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.inline-input:focus {
+    border-color: #ff6b80;
+}
+
+.row-count {
+    margin-top: 0.8rem;
+    color: #808090;
+    font-size: 0.85rem;
+}
+
+.add-form {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.add-form h3 {
+    color: #e94560;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #a0a0b0;
+    font-size: 0.85rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #e94560;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Expanded cell for click-to-reveal */
+td.expanded-cell {
+    max-width: none !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    text-overflow: unset !important;
+    position: relative;
+    z-index: 5;
+    background: #16213e;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    padding: 0.5rem 0.8rem;
+}
+
+.clickable-cell {
+    cursor: pointer;
+}
+
+.clickable-cell:hover {
+    background: #1a1a3e;
+}
+
+/* Quests */
+.quests-container {
+    max-width: 1200px;
+}
+
+.quest-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    color: #e94560;
+    font-size: 1.3rem;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #0f3460;
+    margin-bottom: 0.5rem;
+}
+
+.section-title.collapsed::before {
+    content: '\25B6 ';
+    font-size: 0.8rem;
+}
+
+.section-title:not(.collapsed)::before {
+    content: '\25BC ';
+    font-size: 0.8rem;
+}
+
+.zone-group {
+    margin-bottom: 1.5rem;
+}
+
+.zone-title {
+    color: #a0a0b0;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid #0f3460;
+}
+
+.quest-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.quest-table th {
+    background: #0f3460;
+    color: #e94560;
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.quest-table td {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid #1a1a3e;
+    font-size: 0.85rem;
+}
+
+.quest-table tr.completed td {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.quest-table tr.has-notes td.notes-col {
+    background: rgba(233, 69, 96, 0.05);
+}
+
+.check-col {
+    width: 30px;
+    text-align: center;
+}
+
+.giver-col {
+    min-width: 180px;
+}
+
+.item-col {
+    min-width: 140px;
+}
+
+.notes-col {
+    min-width: 200px;
+    max-width: 300px;
+    white-space: normal;
+}
+
+.quest-tips {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 280px;
+    cursor: pointer;
+    color: #a0a0b0;
+    font-size: 0.82rem;
+}
+
+.quest-tips:hover {
+    color: #c0c0d0;
+}
+
+.quest-tips.expanded-cell {
+    white-space: normal;
+    max-width: none;
+    overflow: visible;
+    background: #16213e;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 5;
+    padding: 0.3rem 0;
+}
+
+.quest-check {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #e94560;
+}
+
+.karma-warning {
+    color: #e94560;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.positive-karma {
+    color: #50c878;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.repeatable-tag {
+    color: #f0a500;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.unavailable-tag {
+    color: #808090;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.guild-membership-tag {
+    color: #50c878;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(80, 200, 120, 0.1);
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 0.3rem;
+}
+
+.guild-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.guild-rank-selector {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #a0a0b0;
+    font-weight: normal;
+}
+
+.guild-rank-dropdown {
+    padding: 0.2rem 0.4rem;
+    border: 1px solid #0f3460;
+    border-radius: 3px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.xp-remaining {
+    color: #f0a500;
+    font-size: 0.8rem;
+}
+
+/* Auth pages */
+.auth-container {
+    max-width: 400px;
+    margin: 3rem auto;
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 8px;
+    padding: 2rem;
+}
+.auth-container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.auth-error {
+    background: rgba(233, 69, 96, 0.15);
+    color: #e94560;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+.auth-form .form-group {
+    margin-bottom: 1rem;
+}
+.auth-form label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #a0a0b0;
+    font-size: 0.85rem;
+}
+.auth-form input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+}
+.auth-form input:focus {
+    border-color: #e94560;
+}
+.auth-submit {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+.auth-switch {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #808090;
+    font-size: 0.9rem;
+}
+.auth-switch a {
+    color: #e94560;
+    text-decoration: none;
+}
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* Nav user section */
+.nav-user {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.nav-username {
+    color: #a0a0b0;
+    font-size: 0.9rem;
+}
+.nav-logout {
+    color: #e94560;
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid #e94560;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+.nav-logout:hover {
+    background: #e94560;
+    color: #fff;
+}
+
+/* Welcome message and section labels */
+.welcome-msg {
+    color: #a0a0b0;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+.section-label {
+    color: #e94560;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.btn-sm {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+/* Custom tab cards on dashboard */
+.custom-tab-card {
+    position: relative;
+}
+.custom-tab-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.custom-tab-link h2 {
+    color: #f0a500;
+}
+.custom-tab-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}
+.empty-state {
+    color: #505070;
+    font-style: italic;
+    padding: 1rem;
+}
+
+/* Inline form for creating tabs */
+.inline-form {
+    margin-bottom: 1rem;
+}
+.inline-form form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.inline-form input {
+    padding: 0.5rem;
+    border: 1px solid #0f3460;
+    border-radius: 4px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+/* Quest card on dashboard */
+.quest-card h2 {
+    color: #50c878;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .nav-links {
+        gap: 0.3rem;
+        justify-content: center;
+    }
+
+    .nav-links a {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    main {
+        margin: 1rem auto;
+        padding: 0 0.8rem;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .table-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .table-card {
+        padding: 1.2rem 1rem;
+    }
+
+    .controls {
+        flex-wrap: wrap;
+    }
+
+    .controls input {
+        max-width: none;
+        min-width: 0;
+        flex: 1 1 100%;
+    }
+
+    .controls select {
+        flex: 1 1 45%;
+        min-width: 0;
+    }
+
+    table {
+        min-width: 600px;
+    }
+
+    .compact-table th {
+        padding: 0.3rem 0.35rem;
+        font-size: 0.65rem;
+    }
+
+    .compact-table td {
+        padding: 0.25rem 0.35rem;
+        font-size: 0.7rem;
+        max-width: 100px;
+    }
+
+    .quest-table {
+        font-size: 0.8rem;
+    }
+
+    .quest-table th {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .quest-table td {
+        padding: 0.35rem 0.5rem;
+    }
+
+    .giver-col {
+        min-width: 120px;
+    }
+
+    .item-col {
+        min-width: 100px;
+    }
+
+    .notes-col {
+        min-width: 140px;
+        max-width: 200px;
+    }
+
+    .quest-tips {
+        max-width: 150px;
+    }
+
+    .section-title {
+        font-size: 1rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .zone-title {
+        font-size: 0.9rem;
+    }
+
+    .guild-rank-selector {
+        font-size: 0.75rem;
+    }
+
+    .guild-rank-dropdown {
+        font-size: 0.75rem;
+    }
+
+    .guild-membership-tag {
+        font-size: 0.65rem;
+        padding: 0.1rem 0.3rem;
+    }
+
+    .controls .btn-primary {
+        flex: 1 1 100%;
+    }
+
+    .add-form {
+        padding: 1rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+
+    .table-wrapper {
+        margin: 0 -0.8rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .actions-col {
+        width: auto;
+    }
+
+    .grip-col {
+        width: 24px;
+    }
+
+    .edit-btn, .delete-btn, .save-btn, .cancel-btn {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .nav-user {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .auth-container {
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+    }
+
+    .inline-form form {
+        flex-wrap: wrap;
+    }
+}

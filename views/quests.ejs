@@ -1,0 +1,169 @@
+<%- include('header') %>
+<h1>Quests</h1>
+
+<div class="controls">
+    <input type="text" id="searchInput" placeholder="Search quests..." onkeyup="filterQuests()">
+</div>
+
+<div class="quests-container">
+    <div class="quest-section">
+        <h2 class="section-title" onclick="toggleSection(this)">Zone Quests</h2>
+        <div class="section-content">
+            <% zoneQuests.forEach(function(zoneGroup) { %>
+            <div class="zone-group">
+                <h3 class="zone-title"><%= zoneGroup.zone %></h3>
+                <table class="quest-table">
+                    <thead>
+                        <tr>
+                            <th class="check-col"></th>
+                            <th class="giver-col">Quest Giver</th>
+                            <th class="item-col">Item Required</th>
+                            <th class="notes-col">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% zoneGroup.quests.forEach(function(q) { 
+                            var dbQuest = quests.find(function(dq) { return dq.giver === q.giver && dq.zone === zoneGroup.zone; });
+                            var dbId = dbQuest ? dbQuest.id : '';
+                            var isCompleted = dbQuest ? dbQuest.completed : 0;
+                        %>
+                        <tr data-giver="<%= q.giver.toLowerCase() %>" data-item="<%= q.item.toLowerCase() %>" data-notes="<%= q.notes.toLowerCase() %>">
+                            <td class="check-col"><input type="checkbox" class="quest-check" data-id="<%= dbId %>" <%= isCompleted ? 'checked' : '' %> onchange="toggleQuest(this)"></td>
+                            <td class="giver-col"><%= q.giver %></td>
+                            <td class="item-col"><%= q.item %></td>
+                            <td class="notes-col"><% if (q.notes.indexOf('Negative Karma') !== -1) { %><span class="karma-warning">Negative Karma</span><% } %><% if (q.notes.indexOf('Item not in game') !== -1) { %><span class="unavailable-tag">Item not in game</span><% } %><% if (q.tips) { %><span class="quest-tips clickable-cell" onclick="this.classList.toggle('expanded-cell')"><%= q.tips %></span><% } %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <div class="quest-section">
+        <h2 class="section-title" onclick="toggleSection(this)">Guild Quests</h2>
+        <div class="section-content">
+            <% guildQuests.forEach(function(guildGroup) { %>
+            <div class="zone-group guild-group">
+                <h3 class="zone-title guild-title">
+                    <%= guildGroup.guild %>
+                    <% if (guildRankMap[guildGroup.guild_key]) { %>
+                    <span class="guild-rank-selector">
+                        Rank: 
+                        <select class="guild-rank-dropdown" data-guild-key="<%= guildGroup.guild_key %>" onchange="updateGuildRank(this)">
+                            <% for (var r = 0; r <= 10; r++) { %>
+                            <option value="<%= r %>" <%= guildRankMap[guildGroup.guild_key].rank === r ? 'selected' : '' %>><%= r %></option>
+                            <% } %>
+                        </select>
+                        <span class="xp-remaining" data-guild-key="<%= guildGroup.guild_key %>"></span>
+                    </span>
+                    <% } %>
+                </h3>
+                <table class="quest-table">
+                    <thead>
+                        <tr>
+                            <th class="check-col"></th>
+                            <th class="giver-col">Quest Giver</th>
+                            <th class="item-col">Item Required</th>
+                            <th class="notes-col">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% guildGroup.quests.forEach(function(q) { 
+                            var dbQuest = quests.find(function(dq) { return dq.giver === q.giver && dq.guild === guildGroup.guild; });
+                            var dbId = dbQuest ? dbQuest.id : '';
+                            var isCompleted = dbQuest ? dbQuest.completed : 0;
+                        %>
+                        <tr data-giver="<%= q.giver.toLowerCase() %>" data-item="<%= q.item.toLowerCase() %>" data-notes="<%= q.notes.toLowerCase() %>">
+                            <td class="check-col"><input type="checkbox" class="quest-check" data-id="<%= dbId %>" <%= isCompleted ? 'checked' : '' %> onchange="toggleQuest(this)"></td>
+                            <td class="giver-col"><%= q.giver %><% if (q.notes.indexOf('Guild Membership') !== -1) { %> <span class="guild-membership-tag">Guild Membership</span><% } %></td>
+                            <td class="item-col"><%= q.item %></td>
+                            <td class="notes-col"><% if (q.notes.indexOf('Negative Karma') !== -1) { %><span class="karma-warning">Negative Karma</span><% } %><% if (q.notes.indexOf('Positive Karma') !== -1) { %><span class="positive-karma">Positive Karma</span><% } %><% if (q.tips) { %><span class="quest-tips clickable-cell" onclick="this.classList.toggle('expanded-cell')"><%= q.tips %></span><% } %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<script>
+function initCheckboxes() {
+    document.querySelectorAll('.quest-check').forEach(function(cb) {
+        if (cb.checked) {
+            cb.closest('tr').classList.add('completed');
+        }
+    });
+    updateXpRemaining();
+}
+
+function toggleQuest(cb) {
+    var id = cb.dataset.id;
+    if (!id) return;
+    var completed = cb.checked;
+    if (completed) {
+        cb.closest('tr').classList.add('completed');
+    } else {
+        cb.closest('tr').classList.remove('completed');
+    }
+    fetch('/api/quest-complete/' + id, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ completed: completed })
+    }).catch(function(err) { alert('Error saving quest: ' + err); });
+}
+
+function updateGuildRank(select) {
+    var guildKey = select.dataset.guildKey;
+    var rank = parseInt(select.value);
+    fetch('/api/guild-rank/' + guildKey, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ rank: rank })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() { updateXpRemaining(); })
+    .catch(function(err) { alert('Error updating rank: ' + err); });
+}
+
+function updateXpRemaining() {
+    document.querySelectorAll('.guild-rank-dropdown').forEach(function(select) {
+        var guildKey = select.dataset.guildKey;
+        var rank = parseInt(select.value);
+        var xpLeft = 0;
+        for (var i = rank + 1; i <= 10; i++) {
+            xpLeft += i * 100;
+        }
+        var el = document.querySelector('.xp-remaining[data-guild-key="' + guildKey + '"]');
+        if (el) {
+            el.textContent = xpLeft > 0 ? '(' + xpLeft + ' XP to rank 10)' : '(MAX)';
+        }
+    });
+}
+
+function filterQuests() {
+    var input = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.quest-table tbody tr').forEach(function(tr) {
+        if (tr.classList.contains('editing')) return;
+        var text = tr.textContent.toLowerCase();
+        tr.style.display = text.includes(input) ? '' : 'none';
+    });
+}
+
+function toggleSection(titleEl) {
+    var content = titleEl.nextElementSibling;
+    if (content.style.display === 'none') {
+        content.style.display = '';
+        titleEl.classList.remove('collapsed');
+    } else {
+        content.style.display = 'none';
+        titleEl.classList.add('collapsed');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initCheckboxes);
+</script>
+<%- include('footer') %>

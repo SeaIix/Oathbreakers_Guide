@@ -1,0 +1,84 @@
+<%- include('header') %>
+<h1>Oathbreakers Guide</h1>
+<p class="welcome-msg">Welcome, <%= username %>!</p>
+
+<div class="section-label">Reference Data</div>
+<div class="table-grid">
+    <% for (const [name, info] of Object.entries(tables)) { %>
+    <a href="/table/<%= name %>" class="table-card">
+        <h2><%= info.display_name %></h2>
+        <p><%= rowsCount[name] %> rows</p>
+    </a>
+    <% } %>
+    <a href="/quests" class="table-card quest-card">
+        <h2>Quests</h2>
+        <p><%= questCompleted %>/<%= questTotal %> completed</p>
+    </a>
+</div>
+
+<div class="section-label">
+    My Spell Tabs
+    <button class="btn-primary btn-sm" onclick="showNewTabForm()">+ New Tab</button>
+</div>
+<div id="newTabForm" class="inline-form" style="display:none;">
+    <form onsubmit="createTab(event)">
+        <input type="text" name="tabName" placeholder="Tab name..." required>
+        <button type="submit" class="btn-primary">Create</button>
+        <button type="button" class="btn-secondary" onclick="hideNewTabForm()">Cancel</button>
+    </form>
+</div>
+<div class="table-grid">
+    <% customTabs.forEach(function(tab) { %>
+    <div class="table-card custom-tab-card">
+        <a href="/table/<%= tab.id %>" class="custom-tab-link">
+            <h2><%= tab.name %></h2>
+            <p><%= tab.entry_count %> entries</p>
+        </a>
+        <div class="custom-tab-actions">
+            <button class="edit-btn" onclick="renameTab(<%= tab.id %>, '<%= tab.name.replace(/'/g, "\\'") %>')">Rename</button>
+            <button class="delete-btn" onclick="deleteTab(<%= tab.id %>, '<%= tab.name.replace(/'/g, "\\'") %>')">Delete</button>
+        </div>
+    </div>
+    <% }) %>
+    <% if (customTabs.length === 0) { %>
+    <p class="empty-state">No custom tabs yet. Create one to organize your spells!</p>
+    <% } %>
+</div>
+
+<script>
+function showNewTabForm() { document.getElementById('newTabForm').style.display = 'block'; }
+function hideNewTabForm() { document.getElementById('newTabForm').style.display = 'none'; }
+
+function createTab(e) {
+    e.preventDefault();
+    var name = e.target.elements.tabName.value;
+    fetch('/api/custom-tabs', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name: name })
+    }).then(function(r) { return r.json(); })
+    .then(function(result) { if (result.id) location.reload(); else alert('Error: ' + result.error); })
+    .catch(function(err) { alert('Error: ' + err); });
+}
+
+function renameTab(id, oldName) {
+    var newName = prompt('New name for "' + oldName + '":', oldName);
+    if (!newName || newName === oldName) return;
+    fetch('/api/custom-tabs/' + id, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name: newName })
+    }).then(function(r) { return r.json(); })
+    .then(function(result) { if (result.message) location.reload(); else alert('Error: ' + result.error); })
+    .catch(function(err) { alert('Error: ' + err); });
+}
+
+function deleteTab(id, name) {
+    if (!confirm('Delete tab "' + name + '"? This cannot be undone.')) return;
+    fetch('/api/custom-tabs/' + id, { method: 'DELETE' })
+    .then(function(r) { return r.json(); })
+    .then(function(result) { if (result.message) location.reload(); else alert('Error: ' + result.error); })
+    .catch(function(err) { alert('Error: ' + err); });
+}
+</script>
+<%- include('footer') %>
