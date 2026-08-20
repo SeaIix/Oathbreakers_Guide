@@ -1,0 +1,128 @@
+Spell,Effect,Type,Duration,Charge,Magnitude
+1,Knockup,Bullet,Low,Very High,Very Low
+10,Rolling Thunder,Bullet,Very High,High,Very Low
+11,Agility,Bullet,Very High,High,Very Low
+100,Amplify Statuses,Bullet,High,Very High,Very Low
+101,Magnify Statuses,Bullet,High,High,Very Low
+110,Regeneration,Bullet,Very Low,High,Very Low
+111,Undying,Bullet,Medium,Very High,Very Low
+1000,Soothe,Bullet,Very High,Very High,Very Low
+1001,Rejuvenate,Snake,Very High,Very High,Very High
+1010,Hydrate,Bullet,High,Very High,Very Low
+1011,Demon,Bullet,Low,High,Very Low
+1100,Cleanse,Bullet,,,
+1101,Block,Bullet,,,
+1110,Freedom,Bullet,Low,Very High,Very Low
+1111,Protection,Bullet,,,
+10000,Float,Bullet,Medium,Low,Very Low
+10001,Bounce,Bullet,Medium,Medium,Very Low
+10010,Erosion,Bullet,Medium,High,Very Low
+10011,Defrost,Bullet,Low,High,Very Low
+10100,Extinguish,Bullet,High,Very High,Very Low
+10101,Freedom,Snake,High,Very High,Very High
+10110,Discharge,Bullet,High,Low,Very Low
+10111,Antidote,Bullet,Very High,Medium,Very Low
+11000,Awake,Bullet,,,
+11001,Star Seed,Pillar,,,
+11010,Smokescreen,Bullet,Medium,Medium,Very Low
+11011,Invisible,Bullet,Low,Medium,Very Low
+11100,Guardian,Bullet,,,
+11101,Rock Armour,Bullet,Medium,Very High,Very Low
+11110,Wind Armour,Bullet,Medium,Very High,Very Low
+11111,Burning Rage,Bullet,Medium,High,Very Low
+100000,Arcane Armour,Bullet,Medium,High,Very Low
+100001,Imbue,Bullet,,,
+100010,Overcharge,Spray,Very High,Very High,Low
+100011,Glacier,Bullet,Low,Low,Very Low
+100100,Turret,Bullet,High,Low,Very Low
+100101,Focus,Bullet,Medium,Medium,Very Low
+100110,Frozen Heart,Bullet,Very Low,Very High,Very Low
+100111,Sami's Fury,Bullet,Medium,Medium,Very Low
+101000,Adrenaline,Bullet,,,
+101001,Enrage,Bullet,Very Low,Medium,Very Low
+101010,Valor,Bullet,,,
+101011,Articulate,Bullet,,,
+101100,Mountain,Bullet,Low,Very High,Very Low
+101101,Crispy's Blessing,Bullet,,,
+101110,Frost Armour,Bullet,Medium,High,Very Low
+101111,Fire Armour,Bullet,High,Medium,Very Low
+110000,Regrowth,Bullet,Low,Very High,Very Low
+110001,Lifemend,Snake,Medium,Very High,Very High
+110010,Living Seed,Explosive Snake,Medium,Very High,Very High
+110011,Air Hog,Bullet,High,Medium,Very Low
+110100,Decoy,Bullet,,,
+110101,Fake Death,Bullet,Low,High,Very Low
+110110,Rewind,Bullet,,,
+110111,Camouflage,Bullet,Very High,High,Very Low
+111000,Mortality,Bullet,Very High,Low,Very Low
+111001,Karmic Vessel,Bullet,,,
+111010,Flux,Bullet,Low,Very High,Very Low
+111011,Static,Bullet,Low,Medium,Very Low
+111100,Soothe,Area,High,Very High,Very High
+111101,Hydrate,Area,High,Very High,Very High
+111110,Undying,Area,High,Very High,Very High
+111111,Firestep,Bullet,Low,Very High,Very Low
+1000000,Efficiency,Bullet,Low,Medium,Very Low
+1000001,Quick Hands,Bullet,Medium,High,Very Low
+1000010,Quenkan's Choice,Pillar,Very High,Very High,Very High
+1000011,Quick Hands,Pillar,Very High,Very High,Very High
+1000100,Ascend,Strike,,,
+1000101,Tornado,Strike,Low,Very High,Very High
+1000110,Finfoot,Bullet,Low,High,Very Low
+1000111,Glacier,Pillar,Very High,Very High,Very High
+1001000,Turret,Pillar,Very High,Very High,Very High
+1001001,Deafen,Bullet,Very Low,Low,Very Low
+1001010,Booming Voice,Bullet,Medium,Medium,Very Low
+1001011,Mute,Bullet,High,High,Very Low
+1001100,Tree Illusion,Explosive Snake,,,
+1001101,Rock Illusion,Explosive Snake,,,
+1001110,,,,,
+1001111,Unending Breath,Bullet,Low,Very High,Very Low
+1010000,Amplify Statuses,Area,,,
+1010001,Magnify Statuses,Area,,,
+1010010,Air Hog,Area,,,
+1010011,Knockup,Area,,,
+1010100,,,,,
+1010101,Freedom,Pillar,Very High,Very High,Very High
+1010110,Hydrate,Beam,Very High,Very High,Very High
+1010111,Regeneration,Beam,Very High,Very High,Very High
+1011000,Sleep,Trap,,,
+1011001,Drunk,Trap,,,
+1011010,Efficiency,Trap,High,Very High,Very High
+1011011,Vomit,Trap,Very High,Very High,Very High
+1011100,,,,,
+1011101,,,,,
+1011110,,,,,
+1011111,,,,,
+1100000,,,,,
+1100001,,,,,
+1100010,Soothe,Explosive Snake,,,
+1100011,Rejuvenate,Explosive Snake,,,
+1100100,Soothe,Mega Ball,,,
+1100101,,,,,
+1100110,Agility,Homing Missile,,,
+1100111,Agility,Trap,,,
+1101000,Block,Area,,,
+1101001,,,,,
+1101010,,,,,
+1101011,,,,,
+1101100,Rewind,Area,,,
+1101101,,,,,
+1101110,,,,,
+1101111,,,,,
+1110000,Float,Explosive Snake,Very High,Very High,Very High
+1110001,Bounce,Explosive Snake,,,
+1110010,,,,,
+1110011,,,,,
+1110100,,,,,
+1110101,,,,,
+1110110,,,,,
+1110111,,,,,
+1111000,Protection,Area,,,
+1111001,,,,,
+1111010,Wind Armour,Snake,Medium,Very High,Very High
+1111011,Wind Armour,Area,Medium,Very High,Very High
+1111100,,,,,
+1111101,,,,,
+1111110,Bounce,Area,,,
+1111111,Knockup,Area,,,

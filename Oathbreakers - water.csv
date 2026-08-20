@@ -1,0 +1,26 @@
+Hydromancy,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Ascend,Negates the rune point cost of all spells for 20S.,false,1,20,N/A,N/A,none,none,none,30
+Engulf,Consume water prison to instantly deal 25 damage to target and apply wet.,true,1,N/A,25,N/A,water prison,none,water prison,none
+Finfoot,Increases swimming speed by 50% for 10S.,false,1,10,N/A,0.5,none,none,none,none
+Heal Dampen,Reduces healing received by 50% for 10S.,true,1,10,N/A,0.5,none,none,none,5
+Hydrate,Consume wet to heal 30 health over 10S.,false,1,10,3,N/A,wet,none,wet,none
+Overflow,Deals 10 damage and spreads wet to everyone around the target.,true,1,N/A,10,N/A,wet,none,none,none
+Rejuvenate,Consume wet to instantly heal 25 health.,false,1,N/A,25,N/A,wet,none,wet,5
+Soothe,"Removes burn, bleed and living bomb, applies wet and heals for 10 health.",false,1,N/A,10,N/A,none,none,"burn, bleed, living bomb",5
+Water Prison,"Consume wet to stun the target for 10S. If the target takes damage, the stun is removed.",true,1,10,N/A,N/A,wet,"frozen, paralysis, stun, rock tomb, sleep, cacoon, frostbite, shock, entangle",wet,30
+Wet,Removes some pyromancy effects and wets the target for 10S.,true,1,10,N/A,N/A,none,none,"burn, firestep, living bomb",none
+,,,,,,,,,,
+Cryomancy,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Blitz,Deals 5 damage for every stack of glaciate on the target.,true,1,N/A,5,N/A,glaciate,none,none,none
+Blizzard,Consumes chill to apply glaciate to target and everyone around the target for 10S.,true,1,10,N/A,N/A,chill,none,chill,10
+Chill,Reduces movement speed by 30% for 8S. Reduces movement speed by 60% if the target is wet.,true,1,8,N/A,0.3,none,"burn, frost armour",none,none
+Defrost,Removes several cryomancy statuses.,false,1,N/A,N/A,N/A,none,none,"frost armour, glacier, glaciate, chill, blizzard, frostbite, frozen",5
+Frost Armour,Removes and blocks chill and glaciate. Applies chill to everyone around the target for 30S.,false,1,30,N/A,N/A,none,"fire armour, rock armour, wind armour, arcane armour, protection",chill,30
+Frostbite,Root the target for 7S. If the target is chill then root for 14S. Breaks when target takes damage.,true,1,7,N/A,N/A,none,"water prison, frozen, paralysis, stun, rock tomb, sleep, cacoon, shock, entangle, burn, rock armour",none,15
+Frozen,Deals 10 damage and stuns the target for 5S. Requires target to be wet.,true,1,5,10,N/A,wet,"water prison, paralysis, stun, rock tomb, sleep, cacoon, frostbite, shock, entangle, rock armour",wet,20
+Frozen Heart,Increases melee and ranged damage by 30% and lowers defence by 15% for 15S.,false,1,15,N/A,0.3,none,none,none,10
+Glaciate,Slows the target by 10% and reduces defence and incoming healing by 10% per stack for 10S,true,3,10,N/A,0.1,none,frost armour,none,none
+Glacier,Increases magic power by 10% per stack. Breaks if target moves.,false,3,20,N/A,0.1,none,none,none,none
+Shatter,Consume frozen and deal 25 damage.,true,1,N/A,25,N/A,frozen,none,frozen,none

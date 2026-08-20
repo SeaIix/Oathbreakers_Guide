@@ -1,0 +1,128 @@
+Spell,Effect,Type,Influence,Duration,Charge,Magnitude
+0,Grounded,Bullet,Heal,,,
+00,Grounded,Bullet,Damage,Medium,High,Very Low
+01,Sleep,Bullet,Heal,Low,Very High,Very Low
+000,Rock Tomb,Bullet,Damage,Medium,Very High,Very Low
+001,Wet,Bullet,Heal,Very High,High,Very Low
+010,Chill,Bullet,Heal,Very High,Medium,Very Low
+011,Sleep,Area,Heal,Low,Very High,Very High
+0000,Weaken,Bullet,Heal,,,
+0001,Weaken Armour,Bullet,Heal,,,
+0010,Frozen,Bullet,Damage,High,Very High,Very Low
+0011,Water Prison,Bullet,Damage,High,High,Very Low
+0100,Nullify,Bullet,Heal,Medium,Medium,Very Low
+0101,Disarm,Bullet,Heal,High,Medium,Very Low
+0110,Stun,Bullet,Damage,,,
+0111,Entangle,Bullet,Damage,Medium,High,Very Low
+00000,Slow,Bullet,Heal,High,Very High,Very Low
+00001,Exhaust,Bullet,Heal,Very Low,High,Very Low
+00010,Red Snow,Bullet,Heal,Low,High,Very Low
+00011,Winded,Bullet,Heal,Low,High,Very Low
+00100,Glaciate,Bullet,Heal,Low,Very High,Very Low
+00101,Frostbite,Bullet,Damage,Low,Very High,Very Low
+00110,Cacoon,Bullet,Damage,Very High,Medium,Very Low
+00111,Purge Defense,Bullet,Heal,,,
+01000,Smelt,Bullet,Damage,High,Very High,Very Low
+01001,Choke,Bullet,Damage,Medium,Medium,Very Low
+01010,Poison,Bullet,Damage,High,High,Very Low
+01011,Burn,Bullet,Damage,High,High,Very Low
+01100,Float,Wall,Damage,Very High,Very High,Very High
+01101,Death Mark,Bullet,Heal,Medium,Very High,Very High
+01110,Corrupt,Bullet,Damage,,,
+01111,Rebuke,Bullet,Damage,,,
+000000,Bleed,Bullet,Damage,Low,High,Very Low
+000001,Hemorrhage,Bullet,Damage,Low,Very High,Very Low
+000010,Paralysis,Bullet,Damage,Very High,High,Very Low
+000011,Electrocute,Snake,Damage,Medium,Very High,Very High
+000100,Poison,Beam,Damage,Very High,Very High,Very High
+000101,Poison,Snake,Damage,Very High,Very High,Very High
+000110,Burn,Mega Ball,Damage,,,
+000111,Burn,Beam,Damage,Very High,Very High,Very High
+001000,Corrupt,Beam,Damage,Very High,Very High,Very High
+001001,Stun,Area,Damage,,,
+001010,Thunderbolt,Beam,Damage,Very High,Very High,Very High
+001011,Shock,Bullet,Damage,Low,Very High,Very Low
+001100,Rebuke,Beam,Damage,,,
+001101,Glaciate,Mega Ball,Damage,Medium,Very High,Very High
+001110,Glaciate,Snake,Damage,Medium,Very High,Very High
+001111,Purge Defense,Area,Damage,,,
+010000,Grounded,Area,Damage,,,
+010001,Crush,Bullet,Damage,,,
+010010,Glaciate,Beam,Damage,Very High,Very High,Very High
+010011,Blitz,Beam,Damage,Very High,Very High,Very High
+010100,Nullify,Area,Damage,Medium,Very High,Very High
+010101,Instant Poison,Bullet,Damage,High,Very High,Very Low
+010110,Conflagrate,Bullet,Damage,,,
+010111,Combust,Bullet,Damage,,,
+011000,Burn,Snake,Damage,,,
+011001,Smog,Beam,Damage,,,
+011010,Fear,Bullet,Heal,High,Medium,Very Low
+011011,Confuse,Bullet,Heal,Low,Very High,Very Low
+011100,Heal Dampen,Bullet,Heal,Low,Very High,Very Low
+011101,Haze,Bullet,Heal,Low,Medium,Very Low
+011110,Wet,Area,Damage,High,Very High,Very High
+011111,Water Prison,Area,Damage,High,Very High,Very High
+0000000,Rupture,Bullet,Damage,Low,Very High,Very Low
+0000001,Deep Wound,Snake,Damage,,,
+0000010,Entangle,Snake,Damage,Medium,Very High,Very High
+0000011,Frostbite,Snake,Damage,,,
+0000100,Drunk,Bullet,Heal,Medium,Very High,Very Low
+0000101,Confuse,Bullet,Heal,High,Very High,Very Low
+0000110,Plague,Area,Heal,Low,Very High,Very High
+0000111,Rune Tap,Bullet,Heal,Low,Very High,Very Low
+0001000,Instant Poison,Beam,Damage,Very High,Very High,Very High
+0001001,Weakening Poison,Snake,Damage,High,Very High,Very High
+0001010,Rock Burial,Snake,Damage,Medium,Very High,Very High
+0001011,Nullifying Poison,Bullet,Damage,Medium,High,Very Low
+0001100,Burn,Explosive Snake,Damage,Very High,Very High,Very High
+0001101,Staggering Poison,Bullet,Damage,Medium,Medium,Very Low
+0001110,Conflagrate,Beam,Damage,Very High,Very High,Very High
+0001111,Combust,Beam,Damage,Very High,Very High,Very High
+0010000,Consume,Beam,Damage,,,
+0010001,Poison,Mega Ball,Damage,Medium,Very High,Very High
+0010010,Vomit,Bullet,Heal,Very Low,High,Very Low
+0010011,Dampening Poison,Snake,Damage,,,
+0010100,Overpower,Beam,Damage,Very High,Very High,Very High
+0010101,Thunderbolt,Pillar,Damage,Very High,Very High,Very High
+0010110,Grounded,Trap,Damage,,,
+0010111,Shatter,Snake,Damage,High,Very High,Very High
+0011000,Burn,Mega Spray,Damage,Very High,Very High,Very High
+0011001,,,,,,
+0011010,,,,,,
+0011011,,,,,,
+0011100,Blitz,Snake,Damage,Medium,Very High,Very High
+0011101,Wet,Spray,Damage,Very High,Very High,Very High
+0011110,Electrocute,Spray,Damage,High,Very High,Very High
+0011111,Engulf,Snake,Damage,High,Very High,Very High
+0100000,Chill,Explosive Snake,Damage,,,
+0100001,Blizzard,Explosive Snake,Damage,Medium,Very High,Very High
+0100010,Exhaust,Pillar,Heal,High,Very High,Very High
+0100011,,,,,,
+0100100,,,,,,
+0100101,,,,,,
+0100110,,,,,,
+0100111,,,,,,
+0101000,Disarm,Area,Damage,,,
+0101001,Wet,Explosive Snake,Damage,Medium,Very High,Very High
+0101010,Grounded,Beam,Damage,Very High,Very High,Very High
+0101011,Thunderbolt,Explosive Snake,Damage,High,Very High,Very High
+0101100,Inferno,Beam,Damage,Very High,Very High,Very High
+0101101,Wildfire,Spray,Damage,Very High,Very High,Very High
+0101110,Invisible,Area,Heal,,,
+0101111,Living Bomb,Explosive Snake,Damage,High,Very High,Very High
+0110000,Combust,Snake,Damage,High,Very High,Very High
+0110001,,,,,,
+0110010,Paralysis,Area,Damage,,,
+0110011,Paralysis,Explosive Snake,Damage,Very High,Very High,Very High
+0110100,Death Mark,Area,Damage,High,Very High,Very High
+0110101,Death Mark,Snake,Damage,,,
+0110110,,,,,,
+0110111,,,,,,
+0111000,Corrupt,Snake,Damage,,,
+0111001,Consume,Snake,Damage,High,Very High,Very High
+0111010,Corrupt,Mega Beam,Damage,,,
+0111011,Corrupt,Mega Ball,Damage,,,
+0111100,Frozen,Area,Damage,,,
+0111101,Overflow,Homing Missile,Damage,,,
+0111110,,,,,,
+0111111,Nightmare,Snake,Damage,Medium,Very High,Very High

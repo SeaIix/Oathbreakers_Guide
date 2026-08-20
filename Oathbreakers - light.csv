@@ -1,0 +1,22 @@
+Divine,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Cleanse,Heals 10 health and removes multiple negative effects.,false,1,N/A,10,N/A,none,none,"poison, burn, fear, drunk, confuse, paralysis, nullify, living bomb, plague, heal dampen",10
+Crispy's Blessing,"If armour is not active, increases magic damage by 0.2% per missing health point for 20S.",false,1,20,N/A,0.002,none,sami's fury,none,10
+Guardian,Increases cooldown avoidance and healing power by 30% and allows flight for 20S.,false,1,20,N/A,0.3,none,"mortality, demon",air hog,30
+Protection,Increases defense by 40% for 10S.,false,1,10,N/A,0.4,none,"frost armour, fire armour, rock armour, wind armour, arcane armour",none,15
+Rebuke,"Instantly deal up to 20 damage. The lower the target's karma, the higher the damage.",true,1,N/A,20,N/A,none,none,none,none
+Rewind,"Saves target's location. After 10S, target teleports back to the saved location.",false,1,10,N/A,N/A,none,none,none,10
+Star Seed,Instantly heals 5 health and applies regrowth.,false,1,N/A,5,N/A,none,none,none,none
+,,,,,,,,,,
+Discipline,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Adrenaline,"If health is lower than 50%, increase movement speed, melee damage, and ranged damage by 30% for 20S or until health is above 50%.",false,1,20,N/A,0.3,none,none,none,none
+Articulate,"Removes mute, deafen, sleep and illusions. Target becomes immune to all for 15S.",false,1,15,N/A,N/A,none,none,"sleep, mute, deafen, tree illusion, rock illusion",10
+Awake,"Heals 10 health, removes sleep and makes target immune to sleep for 10S.",false,1,10,10,N/A,none,none,sleep,5
+Block,Increases defence by 75% for 3S.,false,1,3,N/A,0.75,none,none,none,10
+Crush,"Instantly deal 15 damage to armour. If no armour exists, deal 5 damage to health instead.",true,1,N/A,15,N/A,none,none,none,none
+Karmic Vessel,"Track all damage and healing received for 6S. After, deal the health lost or gained back divided across all nearby targets (including self).",false,1,6,N/A,N/A,none,none,none,30
+Purge Defense,Removes several defensive statuses and deals 10 damage if armour is present.,false,1,N/A,10,N/A,none,none,"frost armour, fire armour, rock armour, wind armour, arcane armour, mountain, protection, cacoon, block",10
+Stun,Prevent the target from moving or casting spells for 4S.,true,1,4,N/A,N/A,none,"water prison, frozen, paralysis, rock tomb, sleep, cacoon, frostbite, shock, entangle, rock armour",none,20
+Valor,"Heals 10 health, removes fear and makes the target immune to fear for 10S.",false,1,10,10,N/A,none,none,fear,5
+Weaken Armour,Target's armour takes 25% more damage from all sources for 10S,false,1,10,N/A,0.25,none,none,none,none

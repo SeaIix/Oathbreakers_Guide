@@ -1,0 +1,21 @@
+Shadow,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Camouflage,"Target becomes invisible until it moves or is damaged, lasts 60S.",false,1,60,N/A,N/A,none,"fake death, invisible, decoy",none,10
+Consume,"Deals up to 16 damage per stack of corrupt on the target. Scales with karma, higher karma equals higher damage.",true,1,N/A,16,N/A,corrupt,none,none,none
+Corrupt,"Deal up to 20 damage per stack over 5S. The higher the target's karma, the higher the damage.",true,2,5,20,N/A,none,none,none,none
+Death Mark,30% of total health lost in the next 10S is re-dealt to the target.,true,1,10,N/A,0.3,none,none,none,30
+Demon,"Increases lifesteal, melee power and acceleration by 30% for 20S.",false,1,20,N/A,0.3,none,"mortality, guardian",none,30
+Fear,Darkens target's vision and reduces heal power by 20% for 5S.,true,1,5,N/A,0.2,none,valor,sleep,10
+Invisible,Become unseeable for 8S.,false,1,8,N/A,N/A,none,"fake death, camouflage, decoy",none,10
+Nightmare,Consume sleep to deal 20 damage and apply fear.,true,1,N/A,20,N/A,sleep,valor,sleep,none
+,,,,,,,,,,
+Blood,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Bleed,Deals 10 damage per stack over 10S.,true,3,10,1,N/A,none,none,none,none
+Deep Wound,Consumes bleed to deal 20 damage over 5S.,true,1,5,4,N/A,bleed,none,bleed,none
+Fake Death,Damage recieved in the next 10S is negated and target heals 20% missing health and becomes invisible for 10S.,false,1,10,N/A,0.2,none,"camouflage, invisible, decoy",none,30
+Hemorrhage,Consume bleed to instantly deal 10 damage and apply weakness to the target.,true,1,N/A,10,N/A,bleed,none,bleed,none
+Red Snow,"Applies a 5% slow. While the target is moving, the slow is increased by 5% and target is dealt 3 damage, for 8S.",true,1,8,3,0.05,none,none,none,5
+Regeneration,Heals 8 health per stack over 8S.,false,3,8,1,N/A,none,none,none,none
+Rupture,"Consumes bleed to apply slow, deal 10 damage and reduce vision for 5S.",true,1,5,10,N/A,bleed,none,bleed,none
+Sami's Fury,"Increase acceleration, melee damage, range damage and reduces defence by 50% of target's max movement speed for 20S.",false,1,20,N/A,0.5,none,crispy's blessing,none,10

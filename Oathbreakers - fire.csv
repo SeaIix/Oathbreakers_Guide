@@ -1,0 +1,24 @@
+Pyromancy,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Burn,Deals 12 damage per stack over 6S.,true,3,6,2,N/A,none,fire armour,"frozen, wet, chill, heal dampen, regrowth, living seed, entangle",none
+Burning Rage,Applies burn and increases melee and ranged damage by 12% per stack.,false,3,20,N/A,0.12,none,none,none,10
+Combust,Consume burn and deal 25 damage.,true,1,N/A,25,N/A,burn,none,burn,none
+Conflagrate,Deal 7 damage for every stack of burn on the target.,true,1,N/A,7,N/A,burn,none,none,none
+Enrage,Increases all melee damage dealt by 20% for 30S.,false,1,20,N/A,0.2,none,"focus, imbue",none,15
+Fire Armour,Removes and blocks burn. Applies burn to everyone around the target for 30S.,false,1,30,N/A,N/A,none,"frost armour, rock armour, wind armour, arcane armour, protection",burn,30
+Firestep,"Consume burn, heal 10 health and increase movement speed by 80% for 6S.",false,1,6,10,0.8,burn,none,burn,5
+Inferno,"While burn is active, instantly deal 10 damage to the target and all nearby targets.",true,1,N/A,10,N/A,burn,none,none,none
+Living Bomb,"Consume burn and deal 15 damage over 5S, then explode to deal 15 damage to everyone in range and apply burn to all effected targets.",true,1,5,15,N/A,burn,none,burn,10
+Smelt,Deal 10% of the target's current armour as damage.,false,1,N/A,N/A,0.1,none,none,none,none
+Turret,Increases ranged power by 10% per stack. Breaks if target moves.,false,3,20,N/A,0.1,none,none,none,none
+Wildfire,Deals 10 damage and spreads burn to everyone around the target.,true,1,N/A,10,N/A,burn,none,none,none
+,,,,,,,,,,
+Typhomancy,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Choke,Deal 10% of target's current missing health as damage.,false,1,N/A,N/A,0.1,none,none,none,none
+Exhaust,Reduces the target's speed by 30% of their max movement speed for 10S.,true,1,10,N/A,0.3,none,none,none,none
+Extinguish,Removes several pyromancy statuses.,false,1,N/A,N/A,N/A,none,none,"fire armour, burning rage, burn, firestep, living bomb",5
+Haze,Reduces melee power and ranged power by 15% per stack for 6S.,true,2,6,N/A,0.15,none,none,none,none
+Smog,Deals 10 damage and has a 50% chance to apply poison.,true,1,N/A,10,0.5,none,none,none,none
+Smokescreen,Dispatches a heavy fog and applies agility to the target.,false,1,N/A,N/A,N/A,none,none,none,3
+Winded,Reduces movement speed by 5% every time the target takes damage for 10S.,false,1,10,N/A,0.05,none,none,none,5

@@ -1,0 +1,25 @@
+Occult,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Arcane Armour,Removes and prevents nullify. Increases magic damage by 30% for 30S.,false,1,30,N/A,0.3,none,"frost armour, fire armour, rock armour, wind armour, protection",nullify,30
+Disarm,Forces target to drop what they are holding and blocks them from grabbing anything else for 2S.,false,1,2,N/A,N/A,none,none,none,15
+Imbue,Increases all magic damage dealt by 20% for 15S.,false,1,15,N/A,0.2,none,"focus, enrage",none,20
+Magnify Statuses,Increase the magnitude (+100%) and potency (+50%) of the next applied status within 15S (excluding amplify statuses).,true,1,15,N/A,1,none,none,none,10
+Mortality,Removes guardian and demon and prevents them from being applied for 30S.,false,1,30,N/A,N/A,none,none,"guardian, demon",10
+Nullify,Prevents the target from casting spells for 3S.,true,1,3,N/A,1,none,arcane armour,none,5
+Quenkan's Choice,Apply a random status effect.,false,1,N/A,N/A,N/A,none,none,none,none
+Rune Tap,100% chance to reduce target's rune points by 50.,false,1,N/A,50,1,none,none,none,5
+Undying,Prevents the target's health from dropping below 1 for 10S.,false,1,10,N/A,N/A,none,none,none,30
+Weaken,Target takes 20% more damage from all sources for 10S.,true,1,10,N/A,0.2,none,none,none,none
+,,,,,,,,,,
+Metaphysics,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Booming Voice,Increases the distance at which players can hear the target by 500% for 20S.,false,1,20,N/A,5,none,none,none,30
+Confuse,Target is confused for 8S.,false,1,8,N/A,N/A,none,none,none,20
+Deafen,Reduces target's hearing by 95% for 10S.,false,1,10,N/A,0.05,none,articulate,none,10
+Drunk,Target's vision is altered and becomes confused for 15S.,false,1,15,N/A,0.5,none,none,none,none
+Efficiency,Increases resource gathering efficiency by 100% for 30S.,false,1,30,N/A,1,none,none,none,none
+Mute,Prevents target from speaking for 10S.,false,1,10,N/A,N/A,none,articulate,none,10
+Overpower,Instantly deals 10 damage.,true,1,N/A,10,N/A,none,none,none,none
+Quick Hands,Reduces the time it takes the target to successfully pickpocket by 20% for 10S.,false,1,10,N/A,0.2,none,none,none,none
+Sleep,Target is stunned and heals 100 health over 15s. Target may wake up when damaged.,true,1,15,100,N/A,none,"water prison, frozen, paralysis, stun, rock tomb, cacoon, frostbite, shock, entangle, articulate, awake, rock armour",none,30
+Vomit,Target vomits and is dealt 5 damage.,true,1,N/A,5,0.5,none,antidote,none,none

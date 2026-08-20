@@ -1,0 +1,26 @@
+Aeromancy,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Agility,Increases movement speed by 40% and acceleration by 20% for 8S.,false,1,8,N/A,0.4,none,none,none,none
+Air Hog,Increases acceleration by 50% and movement speed by 25% per stack for 20S. Applies flight. Cannot be used and is removed in combat.,false,2,20,N/A,0.5,none,guardian,none,15
+Bounce,Increases jump height by 60% for 8S,false,1,8,N/A,0.6,none,none,none,none
+Float,Increases gravity avoidance by 60% for 10S.,false,1,10,N/A,0.6,none,grounded,none,none
+Focus,Increases all ranged damage dealt by 20% for 20S.,false,1,20,N/A,0.2,none,"enrage, imbue",none,15
+Freedom,Heals 10 health and removes movement impairing effects.,false,1,N/A,10,N/A,none,none,"water prison, frozen, paralysis, stun, rock tomb, sleep, cacoon, frostbite, shock, entangle, slow, grounded, chill, red snow",10
+Knockup,Propels the target into the air for 150% jumping height. Can be amplified with jump-enhancing effects.,false,1,N/A,N/A,1.5,none,"water prison, frozen, paralysis, stun, rock tomb, sleep, cacoon, frostbite, shock, entangle, grounded, wind armour",none,3
+Slow,Reduces movement speed by 50% for 6S.,true,1,6,N/A,0.5,none,wind armour,none,5
+Tornado,Applies agility to self and applies knockup to everyone around the target for 20S.,false,1,20,N/A,N/A,none,none,none,30
+Unending Breath,"While underwater, breath is held for an additional 30S.",false,1,30,N/A,N/A,none,none,none,none
+Wind Armour,"Instantly removes stuns and roots, blocks slow and knockup and increases movement speed, jump height and gravity avoidance by 30% for 30S.",false,1,30,N/A,0.3,none,"frost armour, fire armour, rock armour, arcane armour, protection","water prison, frozen, paralysis, stun, rock tomb, sleep, cacoon, frostbite, shock, entangle, slow",30
+,,,,,,,,,,
+Electrokinesis,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Amplify Statuses,Increase the duration of the next applied status within 15S (excluding magnify statuses) by 50%.,true,1,15,N/A,0.5,none,none,none,10
+Discharge,Removes several electrokinesis statuses.,false,1,N/A,N/A,N/A,none,none,"static, flux, overcharge, rolling thunder, paralysis, shock",5
+Electrocute,Deal 1-15 damage. Damage is doubled if target is wet.,true,1,N/A,15,N/A,none,none,none,none
+Flux,Increases cooldown avoidance by 25% for 15S.,false,1,15,N/A,0.25,none,none,none,15
+Overcharge,"Increases magic power and reduces movement speed by 10% per stack for 20S. At max stacks, will deal 15 damage and apply thunderbolt.",false,5,20,15,0.1,none,none,none,20
+Paralysis,50% chance to root the target for 1S every 1S over 10S.,true,1,10,N/A,0.5,none,"water prison, frozen, stun, rock tomb, sleep, cacoon, frostbite, shock, entangle, rock armour",none,20
+Rolling Thunder,Increases movement speed by 20% per stack for 15S.,false,3,15,N/A,0.2,none,none,none,10
+Shock,"Root the target for 2S and deal 1-10 damage. If target is wet, increase root to 4S and deal 1-20 damage instead.",true,1,2,10,N/A,none,"water prison, frozen, paralysis, stun, rock tomb, sleep, cacoon, frostbite, entangle, grounded, rock armour",none,10
+Static,Increases cooldown avoidance by 10% per stack. Breaks if target moves.,false,3,20,N/A,0.1,none,none,none,10
+Thunderbolt,Deal 10 damage to target and all nearby targets. Damage is doubled if target is wet.,true,1,N/A,10,N/A,none,none,none,none

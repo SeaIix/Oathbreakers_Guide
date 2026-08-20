@@ -1,0 +1,27 @@
+Ecomancy,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Antidote,Heals 10 health and removes several ecomancy statuses. Makes you immune to them for 10S.,false,1,10,10,N/A,none,none,"poison, plague, entangle, cacoon",5
+Cacoon,Stuns target for 4S and target takes 70% reduced damage from all sources.,true,1,4,N/A,0.7,none,"water prison, frozen, paralysis, stun, rock tomb, sleep, frostbite, shock, entangle, rock armour, antidote",none,15
+Dampening Poison,"Consumes poison, deal 10 damage and apply heal dampen.",true,1,N/A,10,N/A,poison,none,poison,none
+Decoy,"For the next 10 seconds, if the target recieves damage, it is negated and invisibility is applied.",false,1,10,N/A,N/A,none,"fake death, camouflage, invisible",none,15
+Entangle,"Roots the target for 5S. If the target is wet, then root for 10S.",true,1,5,N/A,N/A,none,"water prison, frozen, paralysis, stun, rock tomb, sleep, cacoon, frostbite, shock, rock armour, antidote",none,
+Instant Poison,Consumes poison and instantly deal 20 damage.,true,1,N/A,20,N/A,poison,none,poison,none
+Lifemend,Instantly heal 15 health if regrowth is active,false,1,N/A,15,N/A,regrowth,none,none,3
+Living Seed,"Consume regrowth to heal 15 health over 5S. Then, all targets in vicinity heal for 15 health and recieve regrowth.",false,1,5,15,N/A,regrowth,burn,regrowth,5
+Nullifying Poison,"Consumes poison, deal 10 damage and apply nullify.",true,1,N/A,10,N/A,poison,none,poison,none
+Plague,"Every 5S for 20S, applies plague to everyone around the target and has a 30% chance to cause target to vomit.",true,1,20,N/A,0.3,none,none,none,none
+Poison,Deals 8 damage per stack over 8S. Reduces healing recieved by 20% per stack.,true,3,8,1,0.2,none,antidote,none,none
+Regrowth,"Heals 10 health per stack over 10S, duration is increased by 50% if the target is wet.",false,2,10,1,N/A,none,burn,none,none
+Staggering Poison,"Consumes poison, deal 10 damage and apply slow.",true,1,N/A,10,N/A,poison,none,poison,none
+Tree Illusion,Hides in a tree for 60S. Breaks if target moves or is damaged.,false,1,60,N/A,N/A,none,articulate,none,15
+Weakening Poison,"Consumes poison, deal 10 damage and apply weaken.",true,1,N/A,10,N/A,poison,none,poison,none
+,,,,,,,,,,
+Geomancy,,,,,,,,,,
+Name,Description,Monster applicable,Max stacks,Duration,Magnitude,Potency,Dependencies,Blockers,Removes,Reapplication cooldown
+Erosion,Removes several geomancy statuses.,false,1,N/A,N/A,N/A,none,none,"rock armour, mountain, grounded, rock tomb",5
+Grounded,Reduces cooldown avoidance by 30% per stack and removes movement enhancing effects and prevents jumping for 8S.,true,2,8,N/A,0.3,none,none,"bounce, float, agility, firestep, rolling thunder, air hog",none
+Mountain,Increases defense by 10% per stack. Breaks if target moves.,false,3,20,N/A,0.1,none,none,none,none
+Rock Armour,Removes and blocks stuns and roots for 30S.,false,1,30,N/A,N/A,none,"frost armour, fire armour, wind armour, arcane armour, protection","water prison, frozen, paralysis, stun, rock tomb, sleep, cacoon, frostbite, shock, entangle",30
+Rock Burial,Consume rock tomb to instantly deal 20 damage to the target.,true,1,N/A,20,N/A,rock tomb,none,rock tomb,none
+Rock Illusion,Hides in a rock for 60S. Breaks if target moves or is damaged.,false,1,60,N/A,N/A,none,articulate,none,15
+Rock Tomb,Consumes grounded to deal 15 damage and stun the target for 6S. Target takes 60% less damage while stunned.,true,1,6,15,0.6,grounded,"water prison, frozen, paralysis, stun, sleep, cacoon, frostbite, shock, entangle, rock armour",grounded,20
