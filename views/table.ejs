@@ -76,6 +76,32 @@
 <script>
 var currentEditId = null;
 var draggedRow = null;
+var filterStoreKey = 'tableFilters_' + '<%= tableName %>';
+
+function persistFilters() {
+    var filterEl = document.getElementById('filterElement');
+    var filterSc = document.getElementById('filterSchool');
+    var data = {};
+    if (filterEl) data.el = filterEl.value;
+    if (filterSc) data.sc = filterSc.value;
+    try { localStorage.setItem(filterStoreKey, JSON.stringify(data)); } catch(e) {}
+}
+
+function restoreFilters() {
+    var filterEl = document.getElementById('filterElement');
+    var filterSc = document.getElementById('filterSchool');
+    if (!filterEl && !filterSc) return;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(filterStoreKey) || '{}'); } catch(e) { saved = {}; }
+    if (filterEl && saved.el) {
+        var elOk = Array.prototype.some.call(filterEl.options, function(o) { return o.value === saved.el; });
+        if (elOk) filterEl.value = saved.el;
+    }
+    if (filterSc && saved.sc) {
+        var scOk = Array.prototype.some.call(filterSc.options, function(o) { return o.value === saved.sc; });
+        if (scOk) filterSc.value = saved.sc;
+    }
+}
 
 function filterTable() {
     var input = document.getElementById('searchInput').value.toLowerCase();
@@ -83,6 +109,7 @@ function filterTable() {
     var filterSc = document.getElementById('filterSchool');
     var elVal = filterEl ? filterEl.value.toLowerCase() : '';
     var scVal = filterSc ? filterSc.value.toLowerCase() : '';
+    persistFilters();
     var rows = document.querySelectorAll('#dataTable tbody tr');
     var count = 0;
     rows.forEach(function(row) {
@@ -328,5 +355,8 @@ document.querySelectorAll('#dataTable tbody td[data-col]').forEach(function(td) 
         });
     }
 });
+
+restoreFilters();
+filterTable();
 </script>
 <%- include('footer') %>

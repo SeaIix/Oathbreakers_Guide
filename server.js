@@ -134,8 +134,8 @@ const ZONE_QUESTS = [
       { giver: 'Royal Scout (1/4)', item: 'Yeti Capture Plan', notes: '', tips: 'On the right side of the door at the Blacksmith near the Last Yeti dungeon. Scroll located nearby a box next to the Last Yeti Dungeon portal.' },
       { giver: 'Royal Scout (2/4)', item: 'Yeti Bone', notes: '', tips: 'Chance to be looted from the Yeti in Last Yeti.' },
       { giver: 'Royal Scout (3/4)', item: 'T5 - Chillbone', notes: '', tips: 'Made by using an Upgrader with a Yeti Bone.' },
-      { giver: 'Royal Scout (4/4)', item: '???', notes: '', tips: 'Can be purchased at the Water Mastery Tower when Rank ???' },
-      { giver: 'Rugged Adventurer (Repeatable)', item: 'Frost Wolf Tooth', notes: 'Negative Karma', tips: 'At a campsite up the road, to the right from the White Wolf Mountain dungeon. Frost Wolf Tooth chance to be looted from Frost Wolf.' },
+      { giver: 'Royal Scout (4/4)', item: 'T6 Javelin - Toothpick', notes: '', tips: 'Chance to be looted from the Yeti Last Yeti.' },
+      { giver: 'Rugged Adventurer (Repeatable)', item: 'Frost Wolf Tooth', notes: 'Negative Karma (100)', tips: 'At a campsite up the road, to the right from the White Wolf Mountain dungeon. Frost Wolf Tooth chance to be looted from Frost Wolf.' },
       { giver: 'Dwarf Scout (1/3)', item: 'Bounce Potion', notes: '', tips: 'On top of the White Wolf Mountain dungeon. Crafted with a Water Vial and an Air Rune at a potion brewer (Alchemy).' },
       { giver: 'Dwarf Scout (2/3)', item: 'Eye of Icanus', notes: '', tips: 'Chance to be looted from Icanus (White Wolf Mountain).' },
       { giver: 'Dwarf Scout (3/3)', item: 'Flux Potion', notes: '', tips: 'Crafted with a Water Vial and an Eye of Icanus at a potion brewer (Alchemy).' },
@@ -213,7 +213,7 @@ const ZONE_QUESTS = [
       { giver: 'Skeptical Adventurer (1/4)', item: 'The Ritual', notes: '', tips: 'Outside The Heart dungeon. Book located in the Faith Guild cellar below the Faith Guild underwater. Requires Faith Guild Cellar Key found in a boat on the dock behind the Faith Guild.' },
       { giver: 'Skeptical Adventurer (2/4)', item: 'Ritual Orders', notes: '', tips: 'Scroll located inside The Heart dungeon. It\'s sitting on a crate to the right beside the entrance portal in the first room where you select the difficulty setting.' },
       { giver: 'Skeptical Adventurer (3/4)', item: 'Water Mote', notes: '', tips: 'Complete 3 waves of the Il\'Heim Intelligence Tower and collect the Water Mote as a reward. Chance to be looted from the boss of The Heart.' },
-      { giver: 'Skeptical Adventurer (4/4) (Repeatable)', item: 'The Frozen Heart', notes: '', tips: 'Complete 4 waves of the Il\'Heim Intelligence Tower and collect the book The Frozen Heart as a reward.' },
+      { giver: 'Skeptical Adventurer (4/4) (Repeatable)', item: 'The Frozen Heart', notes: 'Negative Karma (300)', tips: 'Complete 4 waves of the Il\'Heim Intelligence Tower and collect the book The Frozen Heart as a reward.' },
     ],
   },
   {
@@ -223,7 +223,7 @@ const ZONE_QUESTS = [
       { giver: 'Fisherman (2/2) (Repeatable)', item: 'T1 Frozen Fish', notes: '', tips: 'Obtained by using the Frozen Rod in any water.' },
       { giver: 'Man by the tents (1/3)', item: 'Eco Pearl', notes: 'Negative Karma', tips: 'By the tents downhill from Gathering Guild. When facing the water near the tents, to the right of the last glacier pad underwater on ground near edge of green ecoplasm goo.' },
       { giver: 'Man by the tents (2/3)', item: 'Scroll in Hakku Dungeon', notes: 'Negative Karma', tips: 'Near the exit trap door while fighting Hakku.' },
-      { giver: 'Man by the tents (3/3) (Repeatable)', item: 'Crab Eye', notes: 'Negative Karma', tips: 'Chance to be looted from Hard Shell Crab.' },
+      { giver: 'Man by the tents (3/3) (Repeatable)', item: 'Crab Eye', notes: 'Negative Karma (100)', tips: 'Chance to be looted from Hard Shell Crab.' },
       { giver: 'Woman at the crossroads (1/3)', item: 'Ecorune Sample', notes: '', tips: 'Near the entrance of the Gathering Guild. Found in front of the portal to Papa Bear\'s Dungeon, on the box on the right at the Goblin Cryomage.' },
       { giver: 'Woman at the crossroads (2/3)', item: 'Rune Mutations', notes: '', tips: 'Found inside Papa Bear Dungeon as a Random Drop from the Gold Keyed Chests.' },
       { giver: 'Woman at the crossroads (3/3) (Repeatable)', item: 'Goblin Necklace', notes: '', tips: 'Random Drop from Frost Goblins.' },
@@ -243,7 +243,7 @@ const ZONE_QUESTS = [
       { giver: 'Miner near Mine (4/4)', item: 'T5 Backpack - Arctic Ghillie', notes: '', tips: 'Sold by Gathering Guild.' },
       { giver: 'Ghostly Woman at the Fire (1/3)', item: 'T1 Bone', notes: '', tips: 'In the large cave/mine hallway under the Kings room in front of the ghostly fire. Looted from any creature with bones.' },
       { giver: 'Ghostly Woman at the Fire (2/3)', item: 'T2 Bone', notes: '', tips: 'Looted from Mama Bear, Polar Bears.' },
-      { giver: 'Ghostly Woman at the Fire (3/3)', item: 'Papa Bear Bone', notes: '', tips: 'Looted from Papa Bear.' },
+      { giver: 'Ghostly Woman at the Fire (3/3) (Repeatable)', item: 'Papa Bear Bone', notes: '', tips: 'Looted from Papa Bear.' },
     ],
   },
   {
@@ -381,6 +381,15 @@ const GUILD_QUESTS = [
     guild_key: 'light',
     quests: [
       { giver: 'Unconscious Guild Clerk', item: 'Light Seed', notes: 'Guild Membership', tips: 'Zone 1P / When entering from Zone 1J, head right. Found nearby the Faith Guild underwater.' },
+    ],
+  },
+  {
+    guild: 'Thieves Guild',
+    guild_key: 'thieves',
+    quests: [
+      { giver: 'Master Thief (1/3)', item: 'Golden SP Pouch', notes: 'Negative Karma', tips: 'Zone 1O / To the left when entering from Zone 1C. At the top of a tree behind the Water Guild NPC. Completing this quest unlocks the Thieves Guild.' },
+      { giver: 'Master thief (2/3)', item: 'Tooth of Icanus', notes: '', tips: 'Chance to be looted from Icanus.' },
+      { giver: 'Master thief (3/3) (Repeatable)', item: 'T5 Dagger', notes: 'Negative Karma (1000)', tips: 'A T1 Dagger can be upgraded at a Blacksmith.' },
     ],
   },
 ];

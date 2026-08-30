@@ -31,7 +31,7 @@
                             <td class="check-col"><input type="checkbox" class="quest-check" data-id="<%= dbId %>" <%= isCompleted ? 'checked' : '' %> onchange="toggleQuest(this)"></td>
                             <td class="giver-col"><%= q.giver %></td>
                             <td class="item-col"><%= q.item %></td>
-                            <td class="notes-col"><% if (q.notes.indexOf('Negative Karma') !== -1) { %><span class="karma-warning">Negative Karma</span><% } %><% if (q.notes.indexOf('Item not in game') !== -1) { %><span class="unavailable-tag">Item not in game</span><% } %><% if (q.tips) { %><span class="quest-tips clickable-cell" onclick="this.classList.toggle('expanded-cell')"><%= q.tips %></span><% } %></td>
+                            <td class="notes-col"><% if (q.notes.indexOf('Negative Karma') !== -1) { var km = q.notes.match(/\((\d+)\)/); %><span class="karma-warning">Negative Karma<% if (km) { %> (<%= km[1] %>)<% } %></span><% } %><% if (q.notes.indexOf('Item not in game') !== -1) { %><span class="unavailable-tag">Item not in game</span><% } %><% if (q.tips) { %><span class="quest-tips clickable-cell" onclick="this.classList.toggle('expanded-cell')"><%= q.tips %></span><% } %></td>
                         </tr>
                         <% }) %>
                     </tbody>
@@ -79,7 +79,7 @@
                             <td class="check-col"><input type="checkbox" class="quest-check" data-id="<%= dbId %>" <%= isCompleted ? 'checked' : '' %> onchange="toggleQuest(this)"></td>
                             <td class="giver-col"><%= q.giver %><% if (q.notes.indexOf('Guild Membership') !== -1) { %> <span class="guild-membership-tag">Guild Membership</span><% } %></td>
                             <td class="item-col"><%= q.item %></td>
-                            <td class="notes-col"><% if (q.notes.indexOf('Negative Karma') !== -1) { %><span class="karma-warning">Negative Karma</span><% } %><% if (q.notes.indexOf('Positive Karma') !== -1) { %><span class="positive-karma">Positive Karma</span><% } %><% if (q.tips) { %><span class="quest-tips clickable-cell" onclick="this.classList.toggle('expanded-cell')"><%= q.tips %></span><% } %></td>
+                            <td class="notes-col"><% if (q.notes.indexOf('Negative Karma') !== -1) { var km = q.notes.match(/\((\d+)\)/); %><span class="karma-warning">Negative Karma<% if (km) { %> (<%= km[1] %>)<% } %></span><% } %><% if (q.notes.indexOf('Positive Karma') !== -1) { %><span class="positive-karma">Positive Karma</span><% } %><% if (q.tips) { %><span class="quest-tips clickable-cell" onclick="this.classList.toggle('expanded-cell')"><%= q.tips %></span><% } %></td>
                         </tr>
                         <% }) %>
                     </tbody>
@@ -133,13 +133,15 @@ function updateXpRemaining() {
     document.querySelectorAll('.guild-rank-dropdown').forEach(function(select) {
         var guildKey = select.dataset.guildKey;
         var rank = parseInt(select.value);
-        var xpLeft = 0;
-        for (var i = rank + 1; i <= 10; i++) {
-            xpLeft += i * 100;
+        var xpEarned = 0;
+        var xpTotal = 0;
+        for (var i = 1; i <= 10; i++) {
+            xpTotal += i * 100;
+            if (i <= rank) xpEarned += i * 100;
         }
         var el = document.querySelector('.xp-remaining[data-guild-key="' + guildKey + '"]');
         if (el) {
-            el.textContent = xpLeft > 0 ? '(' + xpLeft + ' XP to rank 10)' : '(MAX)';
+            el.textContent = rank >= 10 ? '(MAX)' : '(' + xpEarned + '/' + xpTotal + ' XP to rank 10)';
         }
     });
 }
