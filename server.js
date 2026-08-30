@@ -754,6 +754,11 @@ app.get('/logout', (req, res) => {
   });
 });
 
+// Health check (used by platform monitoring; must not require auth or redirect)
+app.get('/health', (req, res) => {
+  res.status(200).send('ok');
+});
+
 // Page Routes
 app.get('/', requireAuth, async (req, res) => {
   try {
