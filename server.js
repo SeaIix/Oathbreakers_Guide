@@ -66,6 +66,17 @@ const SHARED_TABLES = {
   },
 };
 
+const MONSTER_DATA_COLUMNS = [
+  'weakness_75', 'weakness_50', 'weakness_25', 'weakness_0',
+  'vuln_neg5', 'vuln_neg25', 'vuln_neg50', 'vuln_neg67', 'vuln_neg90', 'invulnerable',
+];
+
+const ALL_ELEMENTS = ['light', 'dark', 'earth', 'fire', 'water', 'air', 'normal', 'arcane'];
+const DAMAGE_TYPES = ['melee', 'ranged', 'magic'];
+const MAGIC_RESISTANCE_EXCEPTIONS = new Set(['frost goblin deathwish', 'goblin cryomage']);
+
+const OVERVIEW_TYPE_ORDER = [...ALL_ELEMENTS, ...DAMAGE_TYPES];
+
 const CUSTOM_TAB_COLUMNS = [
   { key: 'spell_code', label: 'Spell Code' },
   { key: 'effect', label: 'Effect' },
@@ -226,13 +237,13 @@ const ZONE_QUESTS = [
       { giver: 'Man by the tents (3/3) (Repeatable)', item: 'Crab Eye', notes: 'Negative Karma (100)', tips: 'Chance to be looted from Hard Shell Crab.' },
       { giver: 'Woman at the crossroads (1/3)', item: 'Ecorune Sample', notes: '', tips: 'Near the entrance of the Gathering Guild. Found in front of the portal to Papa Bear\'s Dungeon, on the box on the right at the Goblin Cryomage.' },
       { giver: 'Woman at the crossroads (2/3)', item: 'Rune Mutations', notes: '', tips: 'Found inside Papa Bear Dungeon as a Random Drop from the Gold Keyed Chests.' },
-      { giver: 'Woman at the crossroads (3/3) (Repeatable)', item: 'Goblin Necklace', notes: '', tips: 'Random Drop from Frost Goblins.' },
+      { giver: 'Woman at the crossroads (3/3) (Repeatable)', item: 'Goblin Necklace', notes: 'Positive Karma (100)', tips: 'Random Drop from Frost Goblins.' },
     ],
   },
   {
     zone: 'Zone 1O',
     quests: [
-      { giver: 'Crystal Girl (Repeatable)', item: 'Light Crystal', notes: '', tips: 'Located within the Dwarven Fortress, in the room to the left of the large flame, at a desk infront of burning coals. Chance to be looted from many sources (Primary source is Icanus in White Wolf Mountain).' },
+      { giver: 'Crystal Girl (Repeatable)', item: 'Light Crystal', notes: 'Positive Karma (300)', tips: 'Located within the Dwarven Fortress, in the room to the left of the large flame, at a desk infront of burning coals. Chance to be looted from many sources (Primary source is Icanus in White Wolf Mountain).' },
       { giver: 'Dwarven King (1/4)', item: 'Claw of Icanus', notes: '', tips: 'Located within the Dwarven Fortress, down the main hall, upon a throne. Chance to be looted from Icanus (White Wolf Mountain).' },
       { giver: 'Dwarven King (2/4)', item: "Heych'de", notes: '', tips: 'Chance to be looted from Papa Bear.' },
       { giver: 'Dwarven King (3/4)', item: 'Shellcracker', notes: '', tips: 'Chance to be looted from Soft Shell Crabs (Haku\'s Lair).' },
@@ -243,13 +254,13 @@ const ZONE_QUESTS = [
       { giver: 'Miner near Mine (4/4)', item: 'T5 Backpack - Arctic Ghillie', notes: '', tips: 'Sold by Gathering Guild.' },
       { giver: 'Ghostly Woman at the Fire (1/3)', item: 'T1 Bone', notes: '', tips: 'In the large cave/mine hallway under the Kings room in front of the ghostly fire. Looted from any creature with bones.' },
       { giver: 'Ghostly Woman at the Fire (2/3)', item: 'T2 Bone', notes: '', tips: 'Looted from Mama Bear, Polar Bears.' },
-      { giver: 'Ghostly Woman at the Fire (3/3) (Repeatable)', item: 'Papa Bear Bone', notes: '', tips: 'Looted from Papa Bear.' },
+      { giver: 'Ghostly Woman at the Fire (3/3) (Repeatable)', item: 'Papa Bear Bone', notes: 'Positive Karma (1000)', tips: 'Looted from Papa Bear.' },
     ],
   },
   {
     zone: 'Zone 1P',
     quests: [
-      { giver: 'Wounded Sister (1/5)', item: 'Light Crystal', notes: '', tips: 'Next to entrance from Zone 1J. Can be looted from Icanis in White Wolf Mountain dungeon, Papa Bear in Papa Bear Dungeon.' },
+      { giver: 'Wounded Sister (1/5)', item: 'Light Crystal', notes: '', tips: 'Next to entrance from Zone 1J. Can be looted from Icanus in White Wolf Mountain dungeon, Papa Bear in Papa Bear Dungeon.' },
       { giver: 'Wounded Sister (2/5)', item: 'Oathsworn Sigil', notes: '', tips: 'Found on dead sister next to The Tainted Cathedral dungeon.' },
       { giver: 'Wounded Sister (3/5)', item: 'Scroll - A Warning For All', notes: '', tips: 'Found in the hand of a dead sister in the loot room of The Tainted Cathedral dungeon.' },
       { giver: 'Wounded Sister (4/5)', item: 'Scroll - The Time Has Come', notes: '', tips: 'Found in a gold keycard chest in the middle of the first enemy room in The Great Forge dungeon.' },
@@ -401,6 +412,78 @@ function isEmptyRow(row) {
 function titleCase(str) {
   if (!str) return str;
   return str.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function splitTypes(cell) {
+  return String(cell || '').split(/[,\s]+/).map((s) => s.trim().toLowerCase()).filter(Boolean);
+}
+
+function monsterColumnIndex(type, row) {
+  for (let i = 0; i < MONSTER_DATA_COLUMNS.length; i++) {
+    if (splitTypes(row[MONSTER_DATA_COLUMNS[i]]).includes(type)) return i;
+  }
+  return null;
+}
+
+function categoryBaseline(assignments) {
+  const counts = [...assignments.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0]);
+  const maxCount = counts[0][1];
+  const modes = counts.filter(([, c]) => c === maxCount);
+  if (modes.length === 1) return modes[0][0];
+  const idxs = counts.map(([i]) => i).sort((a, b) => a - b);
+  const mid = Math.floor(idxs.length / 2);
+  return idxs.length % 2 === 1 ? idxs[mid] : Math.round((idxs[mid - 1] + idxs[mid]) / 2);
+}
+
+function classifyByOffset(baselineIdx, idx) {
+  const diff = baselineIdx - idx;
+  if (diff >= 2) return 'extreme_weakness';
+  if (diff === 1) return 'weakness';
+  if (diff === 0) return null;
+  if (diff === -1) return 'resistance';
+  return 'extreme_resistance';
+}
+
+function computeMonsterOverview(row) {
+  const name = (row.name || '').trim().toLowerCase();
+  const buckets = { extreme_weakness: [], weakness: [], resistance: [], extreme_resistance: [] };
+
+  const classifyCategory = (types) => {
+    const typeCol = new Map();
+    const assignments = new Map();
+    for (const t of types) {
+      const idx = monsterColumnIndex(t, row);
+      if (idx === null) continue;
+      typeCol.set(t, idx);
+      assignments.set(idx, (assignments.get(idx) || 0) + 1);
+    }
+    if (assignments.size === 0) return;
+    const baseline = categoryBaseline(assignments);
+    for (const t of types) {
+      if (!typeCol.has(t)) continue;
+      let bucket = classifyByOffset(baseline, typeCol.get(t));
+      if (!bucket) continue;
+      if (t === 'magic' && MAGIC_RESISTANCE_EXCEPTIONS.has(name) && bucket === 'extreme_resistance') {
+        bucket = 'resistance';
+      }
+      buckets[bucket].push(t);
+    }
+  };
+
+  classifyCategory(ALL_ELEMENTS);
+  classifyCategory(DAMAGE_TYPES);
+
+  const join = (arr) => arr
+    .map((t) => t)
+    .sort((a, b) => OVERVIEW_TYPE_ORDER.indexOf(a) - OVERVIEW_TYPE_ORDER.indexOf(b))
+    .join(', ');
+
+  return {
+    extreme_weakness: join(buckets.extreme_weakness),
+    weakness: join(buckets.weakness),
+    resistance: join(buckets.resistance),
+    extreme_resistance: join(buckets.extreme_resistance),
+  };
 }
 
 // Middleware
@@ -568,6 +651,8 @@ async function initDB() {
   if (parseInt(questCount.rows[0].count) === 0) {
     await importQuestData();
   }
+
+  await applyDataFixes();
 }
 
 // CSV Import Functions
@@ -677,6 +762,46 @@ async function initUserProgress(userId) {
   } finally {
     client.release();
   }
+}
+
+// Idempotent data corrections applied on startup (do not overwrite user edits to other cells).
+async function applyDataFixes() {
+  await pool.query(`UPDATE monsters SET name = 'Icanus' WHERE name = 'Icanis'`);
+
+  await pool.query(
+    `UPDATE monsters SET weakness_0 = 'melee, earth, fire' WHERE name = 'Cave troll' AND weakness_0 = 'melee, earth fire'`
+  );
+  await pool.query(
+    `UPDATE monsters SET weakness_50 = 'light, dark, earth, fire, normal, arcane' WHERE name = 'Haku' AND weakness_50 = 'light, dark, earth, fire normal, arcane'`
+  );
+  await pool.query(
+    `UPDATE monsters SET weakness_50 = 'light, dark, earth, fire, normal, arcane' WHERE name = 'Soft shell crabs' AND weakness_50 = 'light, dark, earth, fire normal, arcane'`
+  );
+
+  const positiveKarmaNotes = [
+    ['Woman at the crossroads (3/3) (Repeatable)', 'Positive Karma (100)'],
+    ['Crystal Girl (Repeatable)', 'Positive Karma (300)'],
+    ['Ghostly Woman at the Fire (3/3) (Repeatable)', 'Positive Karma (1000)'],
+  ];
+  for (const [giver, notes] of positiveKarmaNotes) {
+    await pool.query(
+      `UPDATE quest_data SET notes = $2 WHERE giver = $1 AND (notes IS NULL OR notes = '')`,
+      [giver, notes]
+    );
+  }
+
+  await pool.query(
+    `UPDATE quest_data SET tips = REPLACE(tips, 'Icanis', 'Icanus')`
+  );
+
+  await pool.query(
+    `DELETE FROM quest_data
+     WHERE giver = 'Ghostly Woman at the Fire (3/3)'
+       AND NOT EXISTS (
+         SELECT 1 FROM quest_data d2
+         WHERE d2.giver = 'Ghostly Woman at the Fire (3/3) (Repeatable)'
+       )`
+  );
 }
 
 // Auth Routes
@@ -810,16 +935,38 @@ app.get('/table/:tableName', requireAuth, async (req, res) => {
       filterOptions = { elements: elements.rows.map((r) => r.element), schools: schools.rows.map((r) => r.school) };
     }
 
-    res.render('table', {
+    const renderData = {
       tableName,
       displayName: info.display_name,
       columns: info.columns,
       rows: result.rows,
-      isShared: true,
       apiBase: tableName,
       filterOptions,
       compact: tableName === 'spells' || tableName === 'monsters',
-    });
+      isEditable: false,
+      rowNoun: 'rows',
+    };
+
+    if (tableName === 'monsters') {
+      const overviewRows = result.rows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        health: row.health,
+        ...computeMonsterOverview(row),
+      }));
+      renderData.overviewRows = overviewRows;
+      renderData.overviewColumns = [
+        { key: 'name', label: 'Name' },
+        { key: 'health', label: 'Health' },
+        { key: 'extreme_weakness', label: 'Extreme Weakness' },
+        { key: 'weakness', label: 'Weakness' },
+        { key: 'resistance', label: 'Resistance' },
+        { key: 'extreme_resistance', label: 'Extreme Resistance' },
+      ];
+      renderData.rowNoun = 'enemies';
+    }
+
+    res.render('table', renderData);
   } else {
     // Custom tab
     const tabResult = await pool.query(
@@ -847,10 +994,11 @@ app.get('/table/:tableName', requireAuth, async (req, res) => {
       displayName: tab.name,
       columns: CUSTOM_TAB_COLUMNS,
       rows: entriesResult.rows,
-      isShared: false,
+      isEditable: true,
       apiBase: 'custom-tab-entries',
       filterOptions: { elements: elements.rows.map((r) => r.element), schools: schools.rows.map((r) => r.school) },
       compact: false,
+      rowNoun: 'rows',
     });
   }
 });
@@ -973,7 +1121,7 @@ app.put('/api/custom-tabs/:tabId', requireAuth, async (req, res) => {
 app.delete('/api/custom-tabs/:tabId', requireAuth, async (req, res) => {
   const { tabId } = req.params;
   try {
-    await pool.query('DELETE FROM custom_tab_entries WHERE tab_id = $1', [tabId]);
+    // custom_tab_entries are removed via ON DELETE CASCADE.
     await pool.query('DELETE FROM custom_tabs WHERE id = $1 AND user_id = $2', [tabId, req.session.userId]);
     res.json({ message: 'Tab deleted' });
   } catch (err) {
@@ -1018,6 +1166,36 @@ app.post('/api/custom-tab-entries/:tabId', requireAuth, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.put('/api/custom-tab-entries/reorder', requireAuth, async (req, res) => {
+  const { order } = req.body;
+  if (!Array.isArray(order)) return res.status(400).json({ error: 'Invalid order' });
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    for (const item of order) {
+      // Verify ownership
+      const check = await client.query(
+        `SELECT cte.id FROM custom_tab_entries cte
+         JOIN custom_tabs ct ON cte.tab_id = ct.id
+         WHERE cte.id = $1 AND ct.user_id = $2`,
+        [item.id, req.session.userId]
+      );
+      if (check.rows.length > 0) {
+        await client.query('UPDATE custom_tab_entries SET sort_order = $1 WHERE id = $2', [item.position, item.id]);
+      }
+    }
+    await client.query('COMMIT');
+    res.json({ message: 'Order updated' });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  } finally {
+    client.release();
   }
 });
 
@@ -1076,36 +1254,6 @@ app.delete('/api/custom-tab-entries/:id', requireAuth, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
-  }
-});
-
-app.put('/api/custom-tab-entries/reorder', requireAuth, async (req, res) => {
-  const { order } = req.body;
-  if (!Array.isArray(order)) return res.status(400).json({ error: 'Invalid order' });
-
-  const client = await pool.connect();
-  try {
-    await client.query('BEGIN');
-    for (const item of order) {
-      // Verify ownership
-      const check = await client.query(
-        `SELECT cte.id FROM custom_tab_entries cte
-         JOIN custom_tabs ct ON cte.tab_id = ct.id
-         WHERE cte.id = $1 AND ct.user_id = $2`,
-        [item.id, req.session.userId]
-      );
-      if (check.rows.length > 0) {
-        await client.query('UPDATE custom_tab_entries SET sort_order = $1 WHERE id = $2', [item.position, item.id]);
-      }
-    }
-    await client.query('COMMIT');
-    res.json({ message: 'Order updated' });
-  } catch (err) {
-    await client.query('ROLLBACK');
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  } finally {
-    client.release();
   }
 });
 

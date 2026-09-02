@@ -168,6 +168,69 @@ h1 {
     border: 1px solid #0f3460;
 }
 
+/* Enemies tab description */
+.tab-description {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+    color: #c0c0d0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.tab-description p {
+    margin: 0;
+}
+
+.tab-description p.disclaimer {
+    margin-bottom: 0.5rem;
+    color: #d8d8e8;
+}
+
+/* Column separators in the exact-data table */
+#dataTable td:not(:first-child),
+#dataTable th:not(:first-child) {
+    border-left: 1px solid #46589a;
+}
+
+#dataTable td[data-col] {
+    border-left: 1px solid #46589a;
+}
+
+/* Column separators in the overview table */
+#overviewTable td:not(:first-child),
+#overviewTable th:not(:first-child) {
+    border-left: 1px solid #46589a;
+}
+
+.overview-section {
+    margin-bottom: 2rem;
+}
+
+.overview-table td.extreme-weak {
+    background: rgba(80, 200, 120, 0.5);
+    color: #eafff1;
+    font-weight: 600;
+}
+
+.overview-table td.weak {
+    background: rgba(80, 200, 120, 0.20);
+    color: #c6f0d5;
+}
+
+.overview-table td.res {
+    background: rgba(233, 69, 96, 0.22);
+    color: #ffcfd6;
+}
+
+.overview-table td.extreme-res {
+    background: rgba(233, 69, 96, 0.55);
+    color: #fff;
+    font-weight: 600;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -196,7 +259,7 @@ th {
 
 td {
     padding: 0.5rem 0.8rem;
-    border-bottom: 1px solid #1a1a3e;
+    border-bottom: 1px solid #3a4778;
     max-width: 250px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -449,7 +512,7 @@ td.expanded-cell {
 
 .quest-table td {
     padding: 0.4rem 0.6rem;
-    border-bottom: 1px solid #1a1a3e;
+    border-bottom: 1px solid #3a4778;
     font-size: 0.85rem;
 }
 

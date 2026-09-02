@@ -17,12 +17,47 @@
         <% }) %>
     </select>
     <% } %>
-    <% if (!isShared) { %>
+    <% if (isEditable) { %>
     <button class="btn-primary" onclick="toggleAddForm()">+ Add Row</button>
     <% } %>
 </div>
 
-<% if (!isShared) { %>
+<% if (typeof overviewRows !== 'undefined' && overviewRows) { %>
+<div class="tab-description">
+    <p class="disclaimer"><strong>Disclaimer: the information in this tab is gathered by hand and may be incomplete or inaccurate.</strong></p>
+    <p>This tab shows some information about every enemy in the game, including health and elemental weaknesses/resistances. The first table is a simplified version which is only meant to give a general idea of what elements/damage types you should or shouldn't use against different enemies. The second table gives exact damage bonus numbers for each enemy, where the damage type (melee, ranged or magic) + the element = the damage bonus; e.g. melee earth damage gets a 50% + 50% = 100% bonus against Icanus.</p>
+</div>
+<section class="overview-section">
+    <h2 class="section-title" onclick="toggleSection(this)">Simplified Overview</h2>
+    <div class="section-content">
+        <div class="table-wrapper">
+            <table id="overviewTable" class="compact-table overview-table">
+                <thead>
+                    <tr>
+                        <% overviewColumns.forEach(function(col) { %>
+                        <th class="<%= col.key %>"><%= col.label %></th>
+                        <% }) %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% overviewRows.forEach(function(row) { %>
+                    <tr data-id="<%= row.id %>">
+                        <% overviewColumns.forEach(function(col) { %>
+                        <td class="<%= col.key %>" data-id="<%= row.id %>" title="<%= row[col.key] || '' %>"><%= row[col.key] || '' %></td>
+                        <% }) %>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <p class="row-count" id="overviewRowCount"><%= overviewRows.length %> enemies</p>
+    </div>
+</section>
+<h2 class="section-title" onclick="toggleSection(this)">Exact Data</h2>
+<div class="section-content">
+<% } %>
+
+<% if (isEditable) { %>
 <div id="addForm" class="add-form" style="display:none;">
     <h3>Add New Row</h3>
     <form onsubmit="addRow(event)">
@@ -46,24 +81,26 @@
     <table id="dataTable" class="<%= compact ? 'compact-table' : '' %>">
         <thead>
             <tr>
-                <% if (!isShared) { %><th class="grip-col"></th><% } %>
+                <% if (isEditable) { %><th class="grip-col"></th><% } %>
                 <% columns.forEach(function(col) { %>
                 <th><%= col.label %></th>
                 <% }) %>
-                <% if (!isShared) { %><th class="actions-col">Actions</th><% } %>
+                <% if (isEditable) { %><th class="actions-col">Actions</th><% } %>
             </tr>
         </thead>
         <tbody>
             <% rows.forEach(function(row) { %>
-            <tr data-id="<%= row.id %>" <% if (!isShared) { %>draggable="true"<% } %>>
-                <% if (!isShared) { %><td class="grip-cell" title="Drag to reorder">&#9776;</td><% } %>
+            <tr data-id="<%= row.id %>" <% if (isEditable) { %>draggable="true"<% } %>>
+                <% if (isEditable) { %><td class="grip-cell" title="Drag to reorder">&#9776;</td><% } %>
                 <% columns.forEach(function(col) { %>
                 <td data-col="<%= col.key %>" <% if (col.virtual) { %>data-virtual="true"<% } %> title="<%= row[col.key] || '' %>"><%= row[col.key] || '' %></td>
                 <% }) %>
-                <% if (!isShared) { %>
+                <% if (isEditable) { %>
                 <td class="actions-col">
                     <button class="edit-btn" onclick="startEdit(this)">Edit</button>
+                    <% if (isEditable) { %>
                     <button class="delete-btn" onclick="deleteRow(<%= row.id %>)">Delete</button>
+                    <% } %>
                 </td>
                 <% } %>
             </tr>
@@ -71,12 +108,16 @@
         </tbody>
     </table>
 </div>
-<p class="row-count"><%= rows.length %> rows</p>
+<p class="row-count" id="exactRowCount"><%= rows.length %> <%= rowNoun %></p>
+<% if (typeof overviewRows !== 'undefined' && overviewRows) { %>
+</div>
+<% } %>
 
 <script>
 var currentEditId = null;
 var draggedRow = null;
 var filterStoreKey = 'tableFilters_' + '<%= tableName %>';
+var rowNoun = '<%= rowNoun %>';
 
 function persistFilters() {
     var filterEl = document.getElementById('filterElement');
@@ -127,10 +168,11 @@ function filterTable() {
         row.style.display = match ? '' : 'none';
         if (match) count++;
     });
-    document.querySelector('.row-count').textContent = count + ' rows';
+    var countEl = document.getElementById('exactRowCount');
+    if (countEl) countEl.textContent = count + ' ' + rowNoun;
 }
 
-<% if (!isShared) { %>
+<% if (isEditable) { %>
 function toggleAddForm() {
     var form = document.getElementById('addForm');
     if (form.style.display === 'none') {
@@ -166,7 +208,9 @@ function addRow(e) {
     })
     .catch(function(err) { alert('Network error: ' + err); });
 }
+<% } %>
 
+<% if (isEditable) { %>
 function startEdit(btn) {
     cancelEdit();
     var tr = btn.closest('tr');
@@ -241,15 +285,19 @@ function cancelEdit() {
         td.style.width = '';
     });
 
-    actionsTd.innerHTML =
-        '<button class="edit-btn" onclick="startEdit(this)">Edit</button>' +
-        '<button class="delete-btn" onclick="deleteRow(' + id + ')">Delete</button>';
+    var editActionsHtml = '<button class="edit-btn" onclick="startEdit(this)">Edit</button>';
+    <% if (isEditable) { %>
+    editActionsHtml += '<button class="delete-btn" onclick="deleteRow(' + id + ')">Delete</button>';
+    <% } %>
+    actionsTd.innerHTML = editActionsHtml;
     actionsTd.style.width = '';
 
     editing.classList.remove('editing');
     currentEditId = null;
 }
+<% } %>
 
+<% if (isEditable) { %>
 function deleteRow(id) {
     if (!confirm('Delete this row?')) return;
 
@@ -355,6 +403,47 @@ document.querySelectorAll('#dataTable tbody td[data-col]').forEach(function(td) 
         });
     }
 });
+
+<% if (typeof overviewRows !== 'undefined' && overviewRows) { %>
+function initOverview() {
+    var extWeakTds = document.querySelectorAll('#overviewTable td.extreme_weakness');
+    extWeakTds.forEach(function(td) { if (td.textContent.trim() !== '') td.classList.add('extreme-weak'); });
+
+    var weakTds = document.querySelectorAll('#overviewTable td.weakness');
+    weakTds.forEach(function(td) { if (td.textContent.trim() !== '') td.classList.add('weak'); });
+
+    var resTds = document.querySelectorAll('#overviewTable td.resistance');
+    resTds.forEach(function(td) { if (td.textContent.trim() !== '') td.classList.add('res'); });
+
+    var extResTds = document.querySelectorAll('#overviewTable td.extreme_resistance');
+    extResTds.forEach(function(td) { if (td.textContent.trim() !== '') td.classList.add('extreme-res'); });
+
+    var overviewInput = document.getElementById('searchInput');
+    if (overviewInput) {
+        overviewInput.addEventListener('keyup', function() {
+            var q = overviewInput.value.toLowerCase();
+            document.querySelectorAll('#overviewTable tbody tr').forEach(function(tr) {
+                tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none';
+            });
+            var vis = document.querySelectorAll('#overviewTable tbody tr');
+            var cnt = 0;
+            vis.forEach(function(tr) { if (tr.style.display !== 'none') cnt++; });
+            var countEl = document.getElementById('overviewRowCount');
+            if (countEl) countEl.textContent = cnt + ' enemies';
+        });
+    }
+}
+
+function toggleSection(titleEl) {
+    var content = titleEl.nextElementSibling;
+    if (content && content.classList.contains('section-content')) {
+        content.style.display = (content.style.display === 'none') ? '' : 'none';
+        titleEl.classList.toggle('collapsed');
+    }
+}
+
+initOverview();
+<% } %>
 
 restoreFilters();
 filterTable();

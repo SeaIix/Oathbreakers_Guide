@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "sync:down": "node sync-down.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

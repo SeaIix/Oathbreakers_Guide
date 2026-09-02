@@ -31,7 +31,7 @@
                             <td class="check-col"><input type="checkbox" class="quest-check" data-id="<%= dbId %>" <%= isCompleted ? 'checked' : '' %> onchange="toggleQuest(this)"></td>
                             <td class="giver-col"><%= q.giver %></td>
                             <td class="item-col"><%= q.item %></td>
-                            <td class="notes-col"><% if (q.notes.indexOf('Negative Karma') !== -1) { var km = q.notes.match(/\((\d+)\)/); %><span class="karma-warning">Negative Karma<% if (km) { %> (<%= km[1] %>)<% } %></span><% } %><% if (q.notes.indexOf('Item not in game') !== -1) { %><span class="unavailable-tag">Item not in game</span><% } %><% if (q.tips) { %><span class="quest-tips clickable-cell" onclick="this.classList.toggle('expanded-cell')"><%= q.tips %></span><% } %></td>
+                            <td class="notes-col"><% if (q.notes.indexOf('Negative Karma') !== -1) { var km = q.notes.match(/\((\d+)\)/); %><span class="karma-warning">Negative Karma<% if (km) { %> (<%= km[1] %>)<% } %></span><% } %><% if (q.notes.indexOf('Positive Karma') !== -1) { var kp = q.notes.match(/\((\d+)\)/); %><span class="positive-karma">Positive Karma<% if (kp) { %> (<%= kp[1] %>)<% } %></span><% } %><% if (q.notes.indexOf('Item not in game') !== -1) { %><span class="unavailable-tag">Item not in game</span><% } %><% if (q.tips) { %><span class="quest-tips clickable-cell" onclick="this.classList.toggle('expanded-cell')"><%= q.tips %></span><% } %></td>
                         </tr>
                         <% }) %>
                     </tbody>
